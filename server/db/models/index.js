@@ -1,5 +1,7 @@
-const Teacher = require('./teacher')
-const Student = require('./student')
+const Student = require("./student");
+const Teacher = require("./teacher");
+const Activity = require("./activity");
+const Reward = require("./reward");
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -8,8 +10,11 @@ const Student = require('./student')
  *    BlogPost.belongsTo(User)
  */
 
-Teacher.hasMany(Student)
-
+Teacher.hasMany(Student);
+// Activity.belongsToMany(Student);
+// Reward.belongsToMany(Student);
+Student.hasMany(Activity);
+Student.hasMany(Reward);
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -18,5 +23,7 @@ Teacher.hasMany(Student)
  */
 module.exports = {
   Teacher,
-  Student
-}
+  Student,
+  Activity,
+  Reward,
+};
