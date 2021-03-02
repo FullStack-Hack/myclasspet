@@ -1,31 +1,30 @@
 const router = require("express").Router();
-const { Reward } = require("../db/models/reward");
-module.exports = router;
+const { Reward } = require("../db/models");
 
 //GET all rewards
 router.get("/", async (req, res, next) => {
-  try {
-    const rewards = await Reward.findAll();
-    res.json(rewards);
-  } catch (error) {
-    next(error);
-  }
+    try {
+        const rewards = await Reward.findAll();
+        res.json(rewards);
+    } catch (error) {
+        next(error);
+    }
 });
 
 //POST one reward
 router.post("/", async (req, res, next) => {
-  try {
-    const { name, description, cost, imageUrl } = req.body;
-    const newReward = await Reward.create({
-      name,
-      description,
-      cost,
-      imageUrl,
-    });
-    res.send(newReward);
-  } catch (error) {
-    next(error);
-  }
+    try {
+        const { name, description, cost, imageUrl } = req.body;
+        const newReward = await Reward.create({
+            name,
+            description,
+            cost,
+            imageUrl,
+        });
+        res.send(newReward);
+    } catch (error) {
+        next(error);
+    }
 });
 
 //GET one reward by Id
@@ -51,3 +50,5 @@ router.delete('/:rewardId', async (req, res, next) => {
         next(error)
     }
 })
+
+module.exports = router;

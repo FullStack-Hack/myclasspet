@@ -1,5 +1,4 @@
 const router = require('express').Router()
-module.exports = router
 
 router.use('/students', require('./students'))
 router.use('/activities', require('./activities'))
@@ -10,3 +9,5 @@ router.use((req, res, next) => {
   error.status = 404
   next(error)
 })
+
+module.exports = router
