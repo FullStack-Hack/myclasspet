@@ -54,22 +54,22 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  // auth and api routes
+  // api routes
   app.use('/api', require('./api'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
 
-  app.get('/hello', (req, res) => {
-    res.send({ express: 'Hello From Express' });
-  });
+  // app.get('/hello', (req, res) => {
+  //   res.send({ express: 'Hello From Express' });
+  // });
   
-  app.post('/world', (req, res) => {
-    console.log(req.body);
-    res.send(
-      `I received your POST request. This is what you sent me: ${req.body.post}`,
-    );
-  });
+  // app.post('/world', (req, res) => {
+  //   console.log(req.body);
+  //   res.send(
+  //     `I received your POST request. This is what you sent me: ${req.body.post}`,
+  //   );
+  // });
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
