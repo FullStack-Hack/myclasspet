@@ -9,7 +9,7 @@ const Activity = db.define("activity", {
     type: Sequelize.STRING,
   },
   timeLength: {
-    type: Sequelize.TIME,
+    type: Sequelize.INTEGER,
   },
   points: {
     type: Sequelize.INTEGER,

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.7.3",
     "axios": "^0.21.1",
     "botframework-webchat": "^4.11.0",
+    "chalk": "^4.1.0",
     "compression": "^1.7.4",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
@@ -31,7 +32,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start\"",
+    "seed": "node seed.js"
   },
   "eslintConfig": {
     "extends": [
