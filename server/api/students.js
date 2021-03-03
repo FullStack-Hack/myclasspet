@@ -27,7 +27,7 @@ router.get("/:studentId/activities", async (req, res, next) => {
     const student = await Student.findByPk(req.params.studentId, {
       include: Activity,
     });
-    res.json(student);
+    res.json(student.activities);
   } catch (error) {
     next(error);
   }
