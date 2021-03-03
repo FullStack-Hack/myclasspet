@@ -78,6 +78,12 @@ const seed = async () => {
         return Teacher.create(teacher);
       })
     );
+
+    //connecting students to activities
+    const student1 = await Student.findByPk(1);
+    console.log(student1);
+    const activity1 = await Activity.findByPk(1);
+    await student1.addActivity(activity1);
   } catch (error) {
     console.log(red(error));
   }
