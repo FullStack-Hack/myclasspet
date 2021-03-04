@@ -13,12 +13,12 @@ const SingleStudent = () => {
     //can just call the function when using Redux
     const getActivities = async () => {
       //make sure server port and front end port are the same?
-      const { data } = await axios.get(`/api/students/${studentId}/activities`);
+      const { data } = await axios.get(`/api/students/1/activities`);
       setActivities(data);
     };
     getActivities();
   }, []);
-
+  console.log("ACTIVITIES", activities);
   return (
     <FullCalendar
       plugins={[dayGridPlugin]}

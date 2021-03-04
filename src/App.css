@@ -28,6 +28,47 @@
   color: #61dafb;
 }
 
+header {
+  display: flex;
+  /* position: fixed; */
+  margin: 0 4em;
+  padding: 10px;
+  width: calc(100vw - 8em);
+  color: #fff;
+  border-radius: 0 0 1em 1em;
+  z-index: 2;
+}
+
+header .logo {
+  flex-grow: 1;
+  padding-top: 0.25em;
+}
+header .logo img {
+  width: 9em;
+}
+header nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  height: 1.5em;
+  margin: 0 1.5em 0 0;
+}
+
+.nav-item a {
+  font-size: 1.3em;
+  color: black;
+  text-decoration: none;
+  padding: 5px;
+}
+.nav-item a:hover {
+  color: blue;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: #d3d3d3;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
