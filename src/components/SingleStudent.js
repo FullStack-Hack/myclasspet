@@ -1,9 +1,9 @@
-import "./App.css";
-import ChatComponent from "./ChatComponent";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 import axios from "axios";
 
-function App() {
+const SingleStudent = () => {
   const [activities, setActivities] = useState([]);
 
   //GET activities from selected student
@@ -13,21 +13,19 @@ function App() {
     //can just call the function when using Redux
     const getActivities = async () => {
       //make sure server port and front end port are the same?
-      const { data } = await axios.get(`/api/students/1/activities`);
+      const { data } = await axios.get(`/api/students/${studentId}/activities`);
       setActivities(data);
     };
     getActivities();
   }, []);
-  console.log(activities);
 
   return (
-    <div className="App">
-      <div>
-        test
-        <ChatComponent />
-      </div>
-    </div>
+    <FullCalendar
+      plugins={[dayGridPlugin]}
+      initialView="dayGridDay"
+      events={activities}
+    />
   );
-}
+};
 
-export default App;
+export default SingleStudent;
