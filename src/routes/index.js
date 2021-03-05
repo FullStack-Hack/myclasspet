@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import {
   AllStudents,
   SingleStudent,
@@ -21,4 +21,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default withRouter(Routes);
