@@ -2,14 +2,17 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const Activity = db.define("activity", {
-  name: {
+  title: {
     type: Sequelize.STRING,
   },
   description: {
     type: Sequelize.STRING,
   },
-  timeLength: {
-    type: Sequelize.INTEGER,
+  start: {
+    type: Sequelize.DATE,
+  },
+  end: {
+    type: Sequelize.DATE,
   },
   points: {
     type: Sequelize.INTEGER,

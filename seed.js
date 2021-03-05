@@ -21,18 +21,26 @@ const students = [
 ];
 const activities = [
   {
-    name: "math",
+    title: "math",
     description: "2+2",
-    timeLength: 60,
+    start: new Date("March 4, 2021 02:24:00").toISOString(),
+    end: new Date("March 4, 2021 03:24:00").toISOString(),
     points: 1,
   },
   {
-    name: "reading",
+    title: "reading",
     description: "jack and jill went up the hill",
-    timeLength: 60,
+    start: new Date("March 4, 2021 01:24:00").toISOString(),
+    end: new Date("March 4, 2021 01:30:00").toISOString(),
     points: 1,
   },
-  { name: "exercise", description: "run", timeLength: 30, points: 1 },
+  {
+    title: "exercise",
+    description: "run",
+    start: new Date("March 4, 2021 03:30:00").toISOString(),
+    end: new Date("March 4, 2021 03:35:00").toISOString(),
+    points: 1,
+  },
 ];
 const rewards = [
   {
@@ -81,9 +89,10 @@ const seed = async () => {
 
     //connecting students to activities
     const student1 = await Student.findByPk(1);
-    console.log(student1);
-    const activity1 = await Activity.findByPk(1);
-    await student1.addActivity(activity1);
+    for (let i = 0; i < activities.length; i++) {
+      const activity = await Activity.findByPk(i + 1);
+      await student1.addActivity(activity);
+    }
   } catch (error) {
     console.log(red(error));
   }
