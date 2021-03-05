@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import axios from "axios";
 
 const SingleStudent = () => {
@@ -10,7 +11,6 @@ const SingleStudent = () => {
   //presumably we would pass the studentId down from the 'AllStudents' view
   useEffect(() => {
     //need another function for async/await within useEffect
-    //can just call the function when using Redux
     const getActivities = async () => {
       //make sure server port and front end port are the same?
       const { data } = await axios.get(`/api/students/1/activities`);
@@ -18,11 +18,10 @@ const SingleStudent = () => {
     };
     getActivities();
   }, []);
-  console.log("ACTIVITIES", activities);
   return (
     <FullCalendar
-      plugins={[dayGridPlugin]}
-      initialView="dayGridDay"
+      plugins={[dayGridPlugin, timeGridPlugin]}
+      initialView="timeGridDay"
       events={activities}
     />
   );
