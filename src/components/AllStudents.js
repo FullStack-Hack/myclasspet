@@ -9,20 +9,47 @@ class AllStudents extends Component {
     this.state = {
       students: [],
       addStudentForm: false,
+      firstName: "",
+      lastName: "",
+      email: "",
     };
     this.toggleAddStudent = this.toggleAddStudent.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getStudents = this.getStudents.bind(this);
   }
   toggleAddStudent() {
     this.setState({ addStudentForm: !this.state.addStudentForm });
   }
   async componentDidMount() {
+    this.getStudents();
+  }
+  async getStudents() {
     try {
       let response = await axios.get("/api/students");
-      console.log(response.data);
       this.setState({ students: response.data });
     } catch (error) {
       console.log(error);
     }
+  }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    try {
+      const { data } = await axios.post("/api/students/add", {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+      });
+      this.getStudents();
+    } catch (error) {
+      console.log(error);
+    }
+    // this.setState({ firstName: "", lastName: "", email: "" });
+    //need to lift state up to trigger re-render of all students
   }
 
   render() {
@@ -34,7 +61,13 @@ class AllStudents extends Component {
             {this.state.addStudentForm ? "Close Form" : "Add Student"}
           </Button>
           <br />
-          {this.state.addStudentForm && <AddStudent />}
+          {this.state.addStudentForm && (
+            <AddStudent
+              props={this.state}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
+          )}
         </div>
         <Table celled selectable>
           <Table.Header>
