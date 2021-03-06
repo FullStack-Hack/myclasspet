@@ -6,11 +6,11 @@ import reportWebVitals from "./reportWebVitals";
 import { Router } from "react-router-dom";
 import history from "./history";
 import { Provider } from "react-redux";
-import store from './components/store'
+import store from "./components/store";
+import "semantic-ui-css/semantic.min.css";
 
 ReactDOM.render(
   <Provider store={store}>
-
     <Router history={history}>
       <App />
     </Router>

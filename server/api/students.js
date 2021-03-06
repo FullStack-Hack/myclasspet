@@ -32,3 +32,13 @@ router.get("/:studentId/activities", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post("/add", async (req, res, next) => {
+  try {
+    const student = new Student(req.body);
+    await student.save();
+    res.send(student);
+  } catch (error) {
+    next(error);
+  }
+});
