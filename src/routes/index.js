@@ -5,7 +5,7 @@ import {
   SingleStudent,
   AllActivities,
   AllRewards,
-  // Login,
+  Login,
 } from "../components";
 
 const Routes = () => {
@@ -15,8 +15,8 @@ const Routes = () => {
       <Route exact path="/activities" component={AllActivities} />
       <Route exact path="/rewards" component={AllRewards} />
       <Route exact path="/student1" component={SingleStudent} />
-
-      {/* <Route exact path="/login" component={Login} /> */}
+      <Route exact path="/login" component={Login} />
+      {/* <Route exact path="/home" component={UserPage} /> */}
     </Switch>
   );
 };
