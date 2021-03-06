@@ -31,7 +31,7 @@ class AllStudents extends Component {
       <div>
         <div className="add-student-container">
           <Button className="icon-btn" onClick={this.toggleAddStudent}>
-            Add Student
+            {this.state.addStudentForm ? "Close Form" : "Add Student"}
           </Button>
           <br />
           {this.state.addStudentForm && <AddStudent />}

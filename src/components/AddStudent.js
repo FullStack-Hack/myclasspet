@@ -21,7 +21,6 @@ class AddStudent extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    //post to DB here??
     try {
       const { data } = await axios.post("/api/students/add", {
         firstName: this.state.firstName,
@@ -32,6 +31,7 @@ class AddStudent extends Component {
       console.log(error);
     }
     this.setState(defaultState);
+    //need to lift state up to trigger re-render of all students
   }
 
   toggleAddStudent() {
