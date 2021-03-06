@@ -3,42 +3,40 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 const ActivityForm = ({ activities, setActivities }) => {
-  const [activity, handleSubmit] = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("DATA", data);
-    console.log("activity", activity);
-    // await axios.post(`/api/student/1/activities`, data)
+    //need to format the time/date here
+    console.log("DATA", console.log(data));
+    //add ending 0s to the time for the seconds, so user can only change hour, but
+
+    const formattedData = {
+      title: data.title,
+      start: data.startDate + " " + data.startTime,
+      end: data.endDate + " " + data.endTime,
+    };
+    console.log(formattedData);
+    // await axios.post(`/api/student/1/activities`, formattedData);
     // setActivities([...activities, data])
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input name="title" ref={activity} placeholder="Title" />
+      <input name="title" ref={register} placeholder="Title" />
       <input
-        name="start-date"
+        name="startDate"
         type="date"
-        ref={activity}
+        ref={register}
         placeholder="Start Date"
       />
       <input
-        name="start-time"
+        name="startTime"
         type="time"
-        ref={activity}
+        ref={register}
         placeholder="Start Time"
       />
-      <input
-        name="end-date"
-        type="date"
-        ref={activity}
-        placeholder="End Date"
-      />
-      <input
-        name="end-time"
-        type="time"
-        ref={activity}
-        placeholder="End Time"
-      />
+      <input name="endDate" type="date" ref={register} placeholder="End Date" />
+      <input name="endTime" type="time" ref={register} placeholder="End Time" />
 
       <button type="submit">Add Activity</button>
     </form>
