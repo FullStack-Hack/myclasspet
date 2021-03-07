@@ -12,8 +12,8 @@ function App() {
       <div>
         <BrowserRouter>
           <Navbar />
-          <ChatComponent />
           <Routes />
+          <ChatComponent />
         </BrowserRouter>
       </div>
     </div>
