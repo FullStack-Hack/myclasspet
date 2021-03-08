@@ -47,16 +47,23 @@ const activities = [
 ];
 const rewards = [
   {
-    name: "donut",
-    description: "you get to eat a donut",
-    cost: "5",
+    name: "Video Games",
+    description: "Play video games for an hour",
+    cost: "10",
+    imageUrl: "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
   },
   {
-    name: "youtube video",
-    description: "you get to watch a youtube video",
+    name: "Playground",
+    description: "Visit the playground for an hour",
     cost: "5",
+    imageUrl: "https://i.pinimg.com/originals/e5/22/fa/e522fa1d1e7ca2e488c35b3af0e313ab.jpg"
   },
-  { name: "coloring", description: "you get to draw a picture", cost: "5" },
+  {
+    name: "Ice Cream",
+    description: "Buy your favorite ice-cream",
+    cost: "7",
+    imageUrl: "https://media.istockphoto.com/vectors/kids-playground-equipment-vector-id628557920?k=6&m=628557920&s=612x612&w=0&h=VOgKLXv82h51lSB3VdB55f9vwoXn0OJcJxPjxCzhtKQ="
+  }
 ];
 const teachers = [
   {

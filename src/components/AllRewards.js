@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Color from 'color';
 import GoogleFont from 'react-google-font-loader';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,8 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
-import { whiteBright } from "chalk";
-// import white from "material-ui/colors/white";
+import axios from "axios";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -109,6 +108,24 @@ export const AllRewards = React.memo(function RewardCard() {
   const styles2 = useStyles({ color: '#B8C1EC' });
   const styles3 = useStyles({ color: '#F6D4A0' });
   const styles4 = useStyles({ color: '#232946' });
+
+  const [rewards, setRewards] = useState(null);
+
+  async function getRewards() {
+    try {
+      let response = await axios.get("/api/rewards");
+      setRewards(response);
+      console.log("REWARDS:", rewards)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (rewards === null) {
+      getRewards();
+    }
+  }, [rewards])
 
   return (
     <section >
