@@ -46,3 +46,16 @@ router.post("/add", async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete("/:studentid", async (req, res, next) => {
+  try {
+    await Student.destroy({
+      where: {
+        id: req.params.studentid,
+      },
+    });
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
