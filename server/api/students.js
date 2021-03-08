@@ -33,6 +33,7 @@ router.get("/:studentId/activities", async (req, res, next) => {
   }
 });
 
+
 router.post("/:studentId/activities", async (req, res, next) => {
   try {
     console.log("REQ.BODY", req.body);
@@ -42,7 +43,35 @@ router.post("/:studentId/activities", async (req, res, next) => {
     await student.addActivity(activity);
 
     res.status(201).json(activity);
+      } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/add", async (req, res, next) => {
+  try {
+    const student = new Student({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+    });
+    await student.save();
+    res.send(student);
   } catch (error) {
     next(error);
   }
 });
+
+router.delete("/:studentid", async (req, res, next) => {
+  try {
+    await Student.destroy({
+      where: {
+        id: req.params.studentid,
+      },
+    });
+    res.status(204).end();
+} catch (error) {
+    next(error);
+  }
+});
+
