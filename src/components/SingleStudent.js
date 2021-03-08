@@ -11,8 +11,10 @@ const SingleStudent = () => {
   useEffect(() => {
     const getActivities = async () => {
       const { data } = await axios.get(`/api/students/1/activities`);
+
       setActivities(data);
     };
+    console.log("ACTIVITIES", activities);
     getActivities();
   }, []);
 
@@ -23,7 +25,11 @@ const SingleStudent = () => {
         initialView="timeGridDay"
         events={activities}
       />
-      <ActivityForm />
+      <ActivityForm
+        className="form"
+        activities={activities}
+        setActivities={setActivities}
+      />
     </>
   );
 };

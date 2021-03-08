@@ -6,10 +6,6 @@ const ActivityForm = ({ activities, setActivities }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    //need to format the time/date here
-    console.log("DATA", console.log(data));
-    //add ending 0s to the time for the seconds, so user can only change hour, but
-
     const formattedData = {
       title: data.title,
       start: data.startDate + " " + data.startTime,
@@ -17,7 +13,7 @@ const ActivityForm = ({ activities, setActivities }) => {
     };
     console.log(formattedData);
     await axios.post(`/api/students/1/activities`, formattedData);
-    // setActivities([...activities, data])
+    setActivities([...activities, formattedData]);
   };
 
   return (
