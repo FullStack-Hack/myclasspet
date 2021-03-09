@@ -17,6 +17,7 @@ class AllStudents extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getStudents = this.getStudents.bind(this);
+    this.deleteStudent = this.deleteStudent.bind(this);
   }
   toggleAddStudent() {
     this.setState({ addStudentForm: !this.state.addStudentForm });
@@ -39,7 +40,7 @@ class AllStudents extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/api/students/add", {
+      await axios.post("/api/students/add", {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
@@ -48,8 +49,14 @@ class AllStudents extends Component {
     } catch (error) {
       console.log(error);
     }
-    // this.setState({ firstName: "", lastName: "", email: "" });
-    //need to lift state up to trigger re-render of all students
+  }
+  async deleteStudent(event) {
+    try {
+      await axios.delete(`api/students/${event.target.id}`);
+      this.getStudents();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -86,6 +93,11 @@ class AllStudents extends Component {
                   <Table.Cell>{student.firstName}</Table.Cell>
                   <Table.Cell>{student.lastName}</Table.Cell>
                   <Table.Cell>{student.email}</Table.Cell>
+                  <Table.Cell>
+                    <Button onClick={this.deleteStudent} id={student.id}>
+                      X
+                    </Button>
+                  </Table.Cell>
                 </Table.Row>
               );
             })}

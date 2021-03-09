@@ -9,8 +9,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
 import axios from "axios";
+import Button from "@material-ui/core/Button";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -84,7 +87,7 @@ const AddCard = ({ classes, image, title, subtitle }) => {
   );
 };
 
-const CustomCard = ({ classes, image, title, subtitle }) => {
+const CustomCard = ({ classes, image, title, subtitle, cost }) => {
   const mediaStyles = useFourThreeCardMediaStyles();
   return (
     <CardActionArea className={classes.actionArea}>
@@ -95,6 +98,10 @@ const CustomCard = ({ classes, image, title, subtitle }) => {
             {title}
           </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
+          <CardActions display='flex'>
+            <Typography>{cost} Points</Typography>
+            <Button size="small">Claim This Reward</Button>
+          </CardActions>
         </CardContent>
       </Card>
     </CardActionArea>
@@ -114,8 +121,7 @@ export const AllRewards = React.memo(function RewardCard() {
   async function getRewards() {
     try {
       let response = await axios.get("/api/rewards");
-      setRewards(response);
-      console.log("REWARDS:", rewards)
+      setRewards(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -140,36 +146,19 @@ export const AllRewards = React.memo(function RewardCard() {
             }
           />
         </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles2}
-            title={'Reward 3'}
-            subtitle={'Description'}
-            image={
-              'https://image.freepik.com/free-vector/icon-gamepad-play-arcade-video-game-gamer-custom-designcartoon-illustration_185390-205.jpg'
-            }
-          />
-        </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles3}
-            title={'Reward 3'}
-            subtitle={'Description'}
-            image={
-              'https://i.pinimg.com/originals/e5/22/fa/e522fa1d1e7ca2e488c35b3af0e313ab.jpg'
-            }
-          />
-        </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles4}
-            title={'Reward 4'}
-            subtitle={'Description'}
-            image={
-              'https://media.istockphoto.com/vectors/kids-playground-equipment-vector-id628557920?k=6&m=628557920&s=612x612&w=0&h=VOgKLXv82h51lSB3VdB55f9vwoXn0OJcJxPjxCzhtKQ='
-            }
-          />
-        </Grid>
+        {rewards && rewards.map(reward => {
+          return (
+            <Grid item>
+              <CustomCard
+                classes={styles2}
+                title={reward.name}
+                subtitle={reward.description}
+                cost={reward.cost}
+                image={reward.imageUrl}
+              />
+            </Grid>
+          )
+        })}
       </Grid>
     </section>
   );

@@ -1,38 +1,12 @@
 import React, { Component } from "react";
 import { Button, Input } from "semantic-ui-react";
-import axios from "axios";
 
-const defaultState = {
-  firstName: "",
-  lastName: "",
-  email: "",
-};
 class AddStudent extends Component {
   constructor(props) {
     super(props);
-    // this.state = defaultState;
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+
     console.log(this.props);
   }
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
-
-  // async handleSubmit(event) {
-  //   event.preventDefault();
-  //   try {
-  //     const { data } = await axios.post("/api/students/add", {
-  //       firstName: this.state.firstName,
-  //       lastName: this.state.lastName,
-  //       email: this.state.email,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   this.setState(defaultState);
-  //   //need to lift state up to trigger re-render of all students
-  // }
 
   render() {
     return (
