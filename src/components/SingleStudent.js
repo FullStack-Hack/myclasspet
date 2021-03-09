@@ -5,16 +5,18 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import axios from "axios";
 import ActivityForm from "./ActivityForm";
 
-const SingleStudent = () => {
+const SingleStudent = ({ match }) => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     const getActivities = async () => {
-      const { data } = await axios.get(`/api/students/1/activities`);
+      const { data } = await axios.get(
+        `/api/students/${match.params.studentId}/activities`
+      );
 
       setActivities(data);
     };
-    console.log("ACTIVITIES", activities);
+
     getActivities();
   }, []);
 
@@ -27,6 +29,7 @@ const SingleStudent = () => {
       />
       <ActivityForm
         className="form"
+        studentId={match.params.studentId}
         activities={activities}
         setActivities={setActivities}
       />
