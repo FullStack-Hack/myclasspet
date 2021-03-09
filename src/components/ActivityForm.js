@@ -34,6 +34,8 @@ const ActivityForm = ({ activities, setActivities, studentId }) => {
       <input name="endDate" type="date" ref={register} placeholder="End Date" />
       <input name="endTime" type="time" ref={register} placeholder="End Time" />
 
+      <input name="points" type="number" ref={register} placeholder="Points" />
+
       <button type="submit">Add Activity</button>
     </form>
   );
