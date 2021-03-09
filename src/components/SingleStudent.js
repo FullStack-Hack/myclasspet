@@ -21,7 +21,6 @@ const SingleStudent = ({ match }) => {
   }, []);
 
   const renderEventContent = (eventInfo) => {
-    console.log("EVENTINFO", eventInfo);
     return (
       <div className="eventContent">
         <b>{eventInfo.event.title}</b>
