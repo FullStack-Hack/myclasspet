@@ -89,7 +89,7 @@ class AllStudents extends Component {
           <Table.Body>
             {students.map((student, idx) => {
               return (
-                <Link to={`/students/${student.id}`}>
+                <Link to={`/students/${student.id}/activities`}>
                   <Table.Row key={idx}>
                     <Table.Cell>{student.id}</Table.Cell>
                     <Table.Cell>{student.firstName}</Table.Cell>

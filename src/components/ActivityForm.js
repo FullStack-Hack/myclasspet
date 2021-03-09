@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const ActivityForm = ({ activities, setActivities }) => {
+const ActivityForm = ({ activities, setActivities, studentId }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
@@ -12,7 +12,7 @@ const ActivityForm = ({ activities, setActivities }) => {
       end: data.endDate + " " + data.endTime,
     };
     console.log(formattedData);
-    await axios.post(`/api/students/1/activities`, formattedData);
+    await axios.post(`/api/students/${studentId}/activities`, formattedData);
     setActivities([...activities, formattedData]);
   };
 
