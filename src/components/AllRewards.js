@@ -12,8 +12,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
-import axios from "axios";
 import Button from "@material-ui/core/Button";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import axios from "axios";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -24,7 +27,7 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
   },
 }));
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(( theme ) => ({
   actionArea: {
     borderRadius: 16,
     // flexBasis: 23,
@@ -68,12 +71,23 @@ const useStyles = makeStyles(() => ({
     fontWeight: 500,
     fontSize: 14,
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: '#FFFFFF',
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
-const AddCard = ({ classes, image, title, subtitle }) => {
+const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
   const mediaStyles = useFourThreeCardMediaStyles();
   return (
-    <CardActionArea className={classes.actionArea}>
+    <CardActionArea className={classes.actionArea} onClick={modalFunction}>
       <Card className={classes.card}>
         <CardMedia classes={mediaStyles} image={image} />
         <CardContent className={classes.content}>
@@ -111,12 +125,24 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
 export const AllRewards = React.memo(function RewardCard() {
 
   const gridStyles = useGridStyles();
+  const classes = useStyles();
+
   const styles = useStyles({ color: '#808080' });
   const styles2 = useStyles({ color: '#B8C1EC' });
   const styles3 = useStyles({ color: '#F6D4A0' });
   const styles4 = useStyles({ color: '#232946' });
 
   const [rewards, setRewards] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    console.log("AM I HERE?")
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   async function getRewards() {
     try {
@@ -144,22 +170,44 @@ export const AllRewards = React.memo(function RewardCard() {
             image={
               'https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg'
             }
+            onClick={handleOpen}
           />
         </Grid>
         {rewards && rewards.map(reward => {
           return (
-            <Grid item>
+            <Grid item key={reward.imageUrl}>
               <CustomCard
                 classes={styles2}
                 title={reward.name}
                 subtitle={reward.description}
                 cost={reward.cost}
                 image={reward.imageUrl}
+                onClick={handleOpen}
               />
             </Grid>
           )
         })}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <h2 id="transition-modal-title">Transition modal</h2>
+              <p id="transition-modal-description">react-transition-group animates me.</p>
+            </div>
+          </Fade>
+        </Modal>
       </Grid>
+
     </section>
   );
 });
