@@ -8,18 +8,21 @@ const students = [
     password: '1234',
     firstName: "cody",
     lastName: "thePug",
+    isAdmin: false,
   },
   {
     email: "murphy@mail.com",
     password: '1234',
     firstName: "murphy",
     lastName: "otherDog",
+    isAdmin: false,
   },
   {
     email: "tomnook@mail.com",
     password: '1234',
     firstName: "tom",
     lastName: "nook",
+    isAdmin: true,
   },
 ];
 const activities = [
