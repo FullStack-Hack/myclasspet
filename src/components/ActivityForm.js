@@ -17,7 +17,7 @@ const ActivityForm = ({ activities, setActivities, studentId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <input name="title" ref={register} placeholder="Title" />
       <input
         name="startDate"

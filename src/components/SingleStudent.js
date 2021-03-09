@@ -21,19 +21,21 @@ const SingleStudent = ({ match }) => {
   }, []);
 
   return (
-    <>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin]}
-        initialView="timeGridDay"
-        events={activities}
-      />
+    <div className="single_student">
+      <div className="calendar">
+        <FullCalendar
+          className="calendar"
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridDay"
+          events={activities}
+        />
+      </div>
       <ActivityForm
-        className="form"
         studentId={match.params.studentId}
         activities={activities}
         setActivities={setActivities}
       />
-    </>
+    </div>
   );
 };
 
