@@ -20,20 +20,33 @@ const SingleStudent = ({ match }) => {
     getActivities();
   }, []);
 
+  const renderEventContent = (eventInfo) => {
+    return (
+      <div className="eventContent">
+        <b>{eventInfo.event.title}</b>
+        <br />
+        <i>+{eventInfo.event.extendedProps.points} Points</i>
+      </div>
+    );
+  };
+
   return (
-    <>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin]}
-        initialView="timeGridDay"
-        events={activities}
-      />
+    <div className="single_student">
+      <div className="calendar">
+        <FullCalendar
+          className="calendar"
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          initialView="timeGridDay"
+          events={activities}
+          eventContent={renderEventContent}
+        />
+      </div>
       <ActivityForm
-        className="form"
         studentId={match.params.studentId}
         activities={activities}
         setActivities={setActivities}
       />
-    </>
+    </div>
   );
 };
 

@@ -22,9 +22,9 @@ import axios from "axios";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
-    [breakpoints.up('md')]: {
-      display: 'flex',
-      justifyContent: 'center',
+    [breakpoints.up("md")]: {
+      display: "flex",
+      justifyContent: "center",
     },
   },
 }));
@@ -33,20 +33,20 @@ const useStyles = makeStyles(( theme ) => ({
   actionArea: {
     borderRadius: 16,
     // flexBasis: 23,
-    display: 'flex',
+    display: "flex",
     // flexBasis: '33.333%',
     width: 256,
-    transition: '0.2s',
-    '&:hover': {
-      transform: 'scale(1.1)',
+    transition: "0.2s",
+    "&:hover": {
+      transform: "scale(1.1)",
     },
   },
   card: ({ color }) => ({
     minWidth: 256,
     borderRadius: 16,
     // flexBasis: '33.333%',
-    boxShadow: 'none',
-    '&:hover': {
+    boxShadow: "none",
+    "&:hover": {
       boxShadow: `0 6px 12px 0 ${Color(color)
         .rotate(-12)
         .darken(0.2)
@@ -56,20 +56,20 @@ const useStyles = makeStyles(( theme ) => ({
   content: ({ color }) => {
     return {
       backgroundColor: color,
-      padding: '1rem 1.5rem 1.5rem',
+      padding: "1rem 1.5rem 1.5rem",
     };
   },
   title: {
-    fontFamily: 'Keania One',
-    fontSize: '1rem',
-    color: '#FFFFFF',
-    textTransform: 'uppercase',
+    fontFamily: "Keania One",
+    fontSize: "1rem",
+    color: "#FFFFFF",
+    textTransform: "uppercase",
   },
   subtitle: {
-    fontFamily: 'Montserrat',
-    color: '#FFFFFF',
+    fontFamily: "Montserrat",
+    color: "#FFFFFF",
     opacity: 0.87,
-    marginTop: '2rem',
+    marginTop: "2rem",
     fontWeight: 500,
     fontSize: 14,
   },
@@ -94,7 +94,7 @@ const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
       <Card className={classes.card}>
         <CardMedia classes={mediaStyles} image={image} />
         <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={'h3'}>
+          <Typography className={classes.title} variant={"h3"}>
             {title}
           </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
@@ -111,7 +111,7 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
       <Card className={classes.card}>
         <CardMedia classes={mediaStyles} image={image} />
         <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={'h3'}>
+          <Typography className={classes.title} variant={"h3"}>
             {title}
           </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
@@ -126,6 +126,7 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
 };
 
 export const AllRewards = React.memo(function RewardCard() {
+  //if user state -> student, add 'buy' option to each card
 
   const gridStyles = useGridStyles();
   const classes = useStyles();
@@ -169,10 +170,10 @@ export const AllRewards = React.memo(function RewardCard() {
         <Grid item onClick={handleOpen}>
           {user.isAdmin && <AddCard
             classes={styles}
-            title={'Add a Reward'}
-            subtitle={'Click to add a new reward.'}
+            title={"Add a Reward"}
+            subtitle={"Click to add a new reward."}
             image={
-              'https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg'
+              "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
             }
           />}
         </Grid>
@@ -253,7 +254,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 >
                   Create
                 </Button>
-                
+
               </form>
 
 
@@ -264,5 +265,6 @@ export const AllRewards = React.memo(function RewardCard() {
     </section>
   );
 });
-export default AllRewards
+
+export default AllRewards;
 

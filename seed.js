@@ -5,24 +5,36 @@ const { Student, Teacher, Reward, Activity } = require("./server/db/models");
 const students = [
   {
     email: "cody@mail.com",
-    password: '1234',
+    password: "1234",
     firstName: "cody",
     lastName: "thePug",
+
+    points: 10,
+
     isAdmin: false,
+
   },
   {
     email: "murphy@mail.com",
-    password: '1234',
+    password: "1234",
     firstName: "murphy",
     lastName: "otherDog",
+
+    points: 4,
+
     isAdmin: false,
+
   },
   {
     email: "tomnook@mail.com",
-    password: '1234',
+    password: "1234",
     firstName: "tom",
     lastName: "nook",
+
+    points: 5,
+
     isAdmin: true,
+
   },
 ];
 const activities = [
@@ -71,7 +83,7 @@ const rewards = [
 const teachers = [
   {
     email: "teacher@mail.com",
-    password: '1234',
+    password: "1234",
     firstName: "miss",
     lastName: "frizzle",
   },
