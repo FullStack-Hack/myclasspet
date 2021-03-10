@@ -28,6 +28,9 @@ const Student = db.define("student", {
   lastName: {
     type: Sequelize.STRING,
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+  },
 });
 
 module.exports = Student;

@@ -13,6 +13,8 @@ import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/four
 import { whiteBright } from "chalk";
 // import white from "material-ui/colors/white";
 
+import {useSelector} from "react-redux"
+
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
     [breakpoints.up('md')]: {
@@ -110,18 +112,20 @@ export const AllRewards = React.memo(function RewardCard() {
   const styles3 = useStyles({ color: '#F6D4A0' });
   const styles4 = useStyles({ color: '#232946' });
 
+  const {user} = useSelector((state) => state)
+  console.log('user in allrewards',user)
   return (
     <section >
       <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
         <Grid item>
-          <AddCard
+          {user.isAdmin && <AddCard
             classes={styles}
             title={'Add a Reward'}
             subtitle={'Click to add a new reward.'}
             image={
               'https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg'
             }
-          />
+          />}
         </Grid>
         <Grid item>
           <CustomCard
