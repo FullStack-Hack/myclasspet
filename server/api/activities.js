@@ -52,4 +52,16 @@ router.delete("/:activityId", async (req, res, next) => {
   }
 });
 
+router.put("/:activityId", async (req, res, next) => {
+  try {
+    const activity = await Activity.findByPk(req.body.id);
+    activity.points = req.body.points;
+    await activity.save();
+
+    res.json(activity);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

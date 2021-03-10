@@ -30,6 +30,13 @@ const SingleStudent = ({ match }) => {
     );
   };
 
+  const handleEventClick = (clickInfo) => {
+    console.log("----------------", clickInfo.event);
+    if (clickInfo.event.extendedProps.points !== 0) {
+      clickInfo.event.title = "world";
+    }
+  };
+
   return (
     <div className="single_student">
       <div className="calendar">
@@ -39,6 +46,7 @@ const SingleStudent = ({ match }) => {
           initialView="timeGridDay"
           events={activities}
           eventContent={renderEventContent}
+          eventClick={handleEventClick}
         />
       </div>
       <ActivityForm
