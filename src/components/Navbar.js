@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import { Link, withRouter } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { red } from 'chalk';
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import { red } from "chalk";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
+  //check for user state, if user -> student, add their points to navbar
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -37,6 +38,6 @@ const Navbar = () => {
       </Tabs>
     </Paper>
   );
-}
+};
 
 export default withRouter(Navbar);

@@ -69,8 +69,21 @@ header nav {
   box-shadow: #d3d3d3;
 }
 
+.single_student {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+}
+.calendar {
+  display: flex;
+  flex: 1;
+}
+.calendar > div {
+  width: 100%;
+}
+
 .form {
-  border: black 2px;
+  flex: 1;
 }
 
 @keyframes App-logo-spin {
