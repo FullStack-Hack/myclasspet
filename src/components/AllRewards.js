@@ -1,8 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Color from 'color';
-import GoogleFont from 'react-google-font-loader';
 import { makeStyles } from '@material-ui/core/styles';
-import NoSsr from '@material-ui/core/NoSsr';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -10,12 +9,15 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
 import Button from "@material-ui/core/Button";
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
 import axios from "axios";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
@@ -77,10 +79,11 @@ const useStyles = makeStyles(( theme ) => ({
     justifyContent: 'center',
   },
   paper: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    justifyContent: 'center',
   },
 }));
 
@@ -127,6 +130,9 @@ export const AllRewards = React.memo(function RewardCard() {
   const gridStyles = useGridStyles();
   const classes = useStyles();
 
+  const {user} = useSelector((state) => state)
+
+
   const styles = useStyles({ color: '#808080' });
   const styles2 = useStyles({ color: '#B8C1EC' });
   const styles3 = useStyles({ color: '#F6D4A0' });
@@ -136,7 +142,6 @@ export const AllRewards = React.memo(function RewardCard() {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    console.log("AM I HERE?")
     setOpen(true);
   };
 
@@ -161,8 +166,9 @@ export const AllRewards = React.memo(function RewardCard() {
 
   return (
     <section >
+
       <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
-        <Grid item>
+        <Grid item onClick={handleOpen}>
           <AddCard
             classes={styles}
             title={'Add a Reward'}
@@ -170,7 +176,6 @@ export const AllRewards = React.memo(function RewardCard() {
             image={
               'https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg'
             }
-            onClick={handleOpen}
           />
         </Grid>
         {rewards && rewards.map(reward => {
@@ -201,14 +206,77 @@ export const AllRewards = React.memo(function RewardCard() {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <h2 id="transition-modal-title">Transition modal</h2>
+              <h2 id="transition-modal-title" justifyContent="center">New Reward</h2>
               <p id="transition-modal-description">react-transition-group animates me.</p>
+              <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="fname"
+                      name="firstName"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="First Name"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={<Checkbox value="allowExtraEmails" color="primary" />}
+                      label="I want to receive inspiration, marketing promotions and updates via email."
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      Already have an account? Sign in
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+
+
             </div>
           </Fade>
         </Modal>
       </Grid>
-
     </section>
   );
 });
 export default AllRewards
+
