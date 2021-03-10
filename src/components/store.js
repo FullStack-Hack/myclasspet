@@ -22,8 +22,8 @@ const gotMe = (user) => ({
 export const login = (formData) => {
   return async (dispatch) => {
     try {
-      console.log('formdata', formData)
       const { data } = await axios.put("/api/auth/login", formData);
+      console.log("DATAAAAA:", data)
       dispatch(gotMe(data));
     } catch (error) {
       console.error(error);

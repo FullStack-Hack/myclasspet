@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Table, Button } from "semantic-ui-react";
 import AddStudent from "./AddStudent";
+import { Link } from "react-router-dom";
 
 class AllStudents extends Component {
   constructor() {
@@ -88,17 +89,19 @@ class AllStudents extends Component {
           <Table.Body>
             {students.map((student, idx) => {
               return (
-                <Table.Row key={idx}>
-                  <Table.Cell>{student.id}</Table.Cell>
-                  <Table.Cell>{student.firstName}</Table.Cell>
-                  <Table.Cell>{student.lastName}</Table.Cell>
-                  <Table.Cell>{student.email}</Table.Cell>
-                  <Table.Cell>
-                    <Button onClick={this.deleteStudent} id={student.id}>
-                      X
-                    </Button>
-                  </Table.Cell>
-                </Table.Row>
+                <Link to={`/students/${student.id}/activities`}>
+                  <Table.Row key={idx}>
+                    <Table.Cell>{student.id}</Table.Cell>
+                    <Table.Cell>{student.firstName}</Table.Cell>
+                    <Table.Cell>{student.lastName}</Table.Cell>
+                    <Table.Cell>{student.email}</Table.Cell>
+                    <Table.Cell>
+                      <Button onClick={this.deleteStudent} id={student.id}>
+                        X
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                </Link>
               );
             })}
           </Table.Body>

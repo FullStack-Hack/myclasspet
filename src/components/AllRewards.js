@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Color from 'color';
 import { makeStyles } from '@material-ui/core/styles';
@@ -131,12 +131,10 @@ export const AllRewards = React.memo(function RewardCard() {
   const classes = useStyles();
 
   const {user} = useSelector((state) => state)
-
+  console.log("USERRRRR:", user)
 
   const styles = useStyles({ color: '#808080' });
   const styles2 = useStyles({ color: '#B8C1EC' });
-  const styles3 = useStyles({ color: '#F6D4A0' });
-  const styles4 = useStyles({ color: '#232946' });
 
   const [rewards, setRewards] = useState(null);
   const [open, setOpen] = useState(false);
@@ -169,14 +167,14 @@ export const AllRewards = React.memo(function RewardCard() {
 
       <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
         <Grid item onClick={handleOpen}>
-          <AddCard
+          {user.isAdmin && <AddCard
             classes={styles}
             title={'Add a Reward'}
             subtitle={'Click to add a new reward.'}
             image={
               'https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg'
             }
-          />
+          />}
         </Grid>
         {rewards && rewards.map(reward => {
           return (
@@ -245,12 +243,6 @@ export const AllRewards = React.memo(function RewardCard() {
                       autoComplete="current-password"
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" />}
-                      label="I want to receive inspiration, marketing promotions and updates via email."
-                    />
-                  </Grid>
                 </Grid>
                 <Button
                   type="submit"
@@ -259,15 +251,9 @@ export const AllRewards = React.memo(function RewardCard() {
                   color="primary"
                   className={classes.submit}
                 >
-                  Sign Up
+                  Create
                 </Button>
-                <Grid container justify="flex-end">
-                  <Grid item>
-                    <Link href="#" variant="body2">
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
-                </Grid>
+                
               </form>
 
 
