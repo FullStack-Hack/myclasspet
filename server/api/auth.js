@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const { Student } = require("../db/models");
-module.exports = router;
-
 
 router.get('/me', async (req, res, next) => {
     try {
@@ -19,6 +17,7 @@ router.get('/me', async (req, res, next) => {
         next(error)
     }
 })
+
 router.put("/login", async (req, res, next) => {
   console.log("ASLD;AFNSDLVKASD;LEWOIAFN")
   try {
@@ -44,3 +43,5 @@ router.delete('/logout', (req, res) => {
     delete req.session.studentId;
     res.sendStatus(204)
 })
+
+module.exports = router;
