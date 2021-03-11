@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updatePoints } from "./store";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,6 +9,7 @@ import ActivityForm from "./ActivityForm";
 
 const SingleStudent = ({ match }) => {
   const [activities, setActivities] = useState([]);
+  const { user } = useSelector((state) => state);
 
   useEffect(() => {
     const getActivities = async () => {
@@ -30,10 +33,21 @@ const SingleStudent = ({ match }) => {
     );
   };
 
+  const dispatch = useDispatch();
+
   const handleEventClick = (clickInfo) => {
-    console.log("----------------", clickInfo.event);
-    if (clickInfo.event.extendedProps.points !== 0) {
-      clickInfo.event.title = "world";
+    if (clickInfo.event.extendedProps.points !== 0 && !user.isAdmin) {
+      //activityId, studentId, points
+      const activity = activities.filter(
+        (elem) =>
+          elem.title === clickInfo.event.title &&
+          elem.start === clickInfo.event.start.toISOString() &&
+          elem.end === clickInfo.event.end.toISOString()
+      )[0];
+
+      dispatch(
+        updatePoints(activity.id, user.id, clickInfo.event.extendedProps.points)
+      );
     }
   };
 

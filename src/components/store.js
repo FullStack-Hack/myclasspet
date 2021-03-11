@@ -22,7 +22,7 @@ const gotMe = (user) => ({
 export const login = (formData) => {
   return async (dispatch) => {
     try {
-      console.log('formdata', formData)
+      console.log("formdata", formData);
       const { data } = await axios.put("/api/auth/login", formData);
       dispatch(gotMe(data));
     } catch (error) {
@@ -54,6 +54,21 @@ export const logout = () => {
     }
   };
 };
+
+export const updatePoints = (activityId, studentId, points) => {
+  return async (dispatch) => {
+    try {
+      //update points in activity, student
+      await axios.put(`/api/activities/${activityId}`);
+      await axios.put(`/api/students/${studentId}`, { points });
+
+      dispatch(gotMe(points));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 const initialState = {
   user: {
     // isFetching: true,

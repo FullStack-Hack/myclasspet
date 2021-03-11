@@ -55,7 +55,7 @@ router.delete("/:activityId", async (req, res, next) => {
 router.put("/:activityId", async (req, res, next) => {
   try {
     const activity = await Activity.findByPk(req.body.id);
-    activity.points = req.body.points;
+    activity.points = 0;
     await activity.save();
 
     res.json(activity);
