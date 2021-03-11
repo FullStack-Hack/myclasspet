@@ -72,3 +72,14 @@ router.delete("/:studentid", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/:studentid", async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.params.studentId);
+    student.points = req.body.points;
+    await student.save();
+    res.json(student);
+  } catch (error) {
+    next(error);
+  }
+});
