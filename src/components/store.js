@@ -5,6 +5,7 @@ import axios from "axios";
 
 //action type
 const GET_USER = "GET_USER";
+const REMOVE_USER = "REMOVE_USER";
 // const SET_FETCHING_STATUS = "SET_FETCHING_STATUS";
 
 //action creator
@@ -12,6 +13,8 @@ const gotMe = (user) => ({
   type: GET_USER,
   user,
 });
+const removeUser = () => ({ type: REMOVE_USER });
+
 
 // const setFetchingStatus = (isFetching) => ({
 //   type: SET_FETCHING_STATUS,
@@ -48,7 +51,7 @@ export const logout = () => {
   return async (dispatch) => {
     try {
       await axios.delete("/auth/logout");
-      dispatch(gotMe({}));
+      dispatch(removeUser());
     } catch (error) {
       console.error(error);
     }
@@ -67,6 +70,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, ...action.user },
       };
+    case REMOVE_USER:
+      return initialState;
     // case SET_FETCHING_STATUS:
     //   return {
     //     ...state, user: {
