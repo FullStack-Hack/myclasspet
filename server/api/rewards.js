@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Reward } = require("../db/models");
+const { Student, Reward } = require("../db/models");
 
 //GET all rewards
 router.get("/", async (req, res, next) => {
@@ -11,21 +11,7 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-//POST one reward
-router.post("/", async (req, res, next) => {
-    try {
-        const { name, description, cost, imageUrl } = req.body;
-        const newReward = await Reward.create({
-            name,
-            description,
-            cost,
-            imageUrl,
-        });
-        res.send(newReward);
-    } catch (error) {
-        next(error);
-    }
-});
+
 
 //GET one reward by Id
 router.get('/:rewardId', async (req, res, next) => {
@@ -51,13 +37,35 @@ router.delete('/:rewardId', async (req, res, next) => {
     }
 })
 
-//DELETE one reward by Id
-router.post("/:rewardId", async (req, res, next) => {
-    try {
-        console.log("REWARD REQ:", req.body, "REWARD PARAM", req.params.rewardId)
-    } catch (error) {
-        next(error)
-    }
+//POST claim a reward
+router.put('/', async (req, res, next) => {
+    console.log("REWARD REQ:", req.body)
+    // try {
+    //     const student = await Student.findByPk(req.body.studentId);
+    //     const reward = await Reward.findByPk(req.body.rewardId);
+
+    //     await student.addReward(reward);
+    //     res.status(201).json(reward);
+
+    // } catch (error) {
+    //     next(error)
+    // }
   });
+
+//POST one reward
+router.post("/", async (req, res, next) => {
+    try {
+        const { name, description, cost, imageUrl } = req.body;
+        const newReward = await Reward.create({
+            name,
+            description,
+            cost,
+            imageUrl,
+        });
+        res.send(newReward);
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;

@@ -124,7 +124,6 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
           <Typography className={classes.subtitle}>{subtitle}</Typography>
           <CardActions display='flex'>
             <Typography>{cost} Points</Typography>
-            <Button size="small">Claim This Reward</Button>
           </CardActions>
         </CardContent>
       </Card>
@@ -175,7 +174,6 @@ export const AllRewards = React.memo(function RewardCard() {
 
   const handleDelete = async (rewardId) => {
     try {
-      console.log("IM IN HAND DEL:", rewardId)
       await axios.delete(`/api/rewards/${rewardId}`);
       setRewards(rewards.filter(reward => reward.id !== rewardId))
     } catch (error) {
@@ -183,8 +181,13 @@ export const AllRewards = React.memo(function RewardCard() {
     }
   }
 
-  const handleClaim = (rewardId, userId) => {
-    console.log("REWARD ID:", rewardId, "USER ID:", userId)
+  const handleClaim = async (rewardId, userId) => {
+    try {
+      console.log("REWARD ID:", rewardId, "USER ID:", userId)
+      await axios.put('/api/rewards', {rewardId})
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const addReward = async (event) => {
@@ -199,10 +202,6 @@ export const AllRewards = React.memo(function RewardCard() {
       console.log("We encountered an error in creating this reward", error);
     }
   }
-
-  // const claimReward = (event) => {
-
-  // }
 
   useEffect(() => {
     if (rewards === null) {
@@ -235,6 +234,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 onClick={handleOpen}
               />
               {user.isAdmin && <Button type="button" onClick={() => handleDelete(reward.id)}>Delete This Reward</Button>}
+              {!user.isAdmin && <Button type="button" onClick={() => handleClaim(reward.id, user.id)}>Claim This Reward</Button>}
             </Grid>
           )
         })}
