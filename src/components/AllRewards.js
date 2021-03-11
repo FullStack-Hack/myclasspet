@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Color from 'color';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
+import Color from "color";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardActions from "@material-ui/core/CardActions";
+import { useFourThreeCardMediaStyles } from "@mui-treasury/styles/cardMedia/fourThree";
 import Button from "@material-ui/core/Button";
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
 import axios from "axios";
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
@@ -29,7 +29,7 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
   },
 }));
 
-const useStyles = makeStyles(( theme ) => ({
+const useStyles = makeStyles((theme) => ({
   actionArea: {
     borderRadius: 16,
     // flexBasis: 23,
@@ -74,16 +74,16 @@ const useStyles = makeStyles(( theme ) => ({
     fontSize: 14,
   },
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 }));
 
@@ -115,7 +115,7 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
             {title}
           </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
-          <CardActions display='flex'>
+          <CardActions display="flex">
             <Typography>{cost} Points</Typography>
             <Button size="small">Claim This Reward</Button>
           </CardActions>
@@ -126,16 +126,14 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
 };
 
 export const AllRewards = React.memo(function RewardCard() {
-  //if user state -> student, add 'buy' option to each card
-
   const gridStyles = useGridStyles();
   const classes = useStyles();
 
-  const {user} = useSelector((state) => state)
-  console.log("USERRRRR:", user)
+  const { user } = useSelector((state) => state);
+  console.log("USERRRRR:", user);
 
-  const styles = useStyles({ color: '#808080' });
-  const styles2 = useStyles({ color: '#B8C1EC' });
+  const styles = useStyles({ color: "#808080" });
+  const styles2 = useStyles({ color: "#B8C1EC" });
 
   const [rewards, setRewards] = useState(null);
   const [open, setOpen] = useState(false);
@@ -161,36 +159,44 @@ export const AllRewards = React.memo(function RewardCard() {
     if (rewards === null) {
       getRewards();
     }
-  }, [rewards])
+  }, [rewards]);
 
   return (
-    <section >
-
-      <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
+    <section>
+      <Grid
+        classes={gridStyles}
+        container
+        margin={100}
+        spacing={4}
+        wrap={"nowrap"}
+      >
         <Grid item onClick={handleOpen}>
-          {user.isAdmin && <AddCard
-            classes={styles}
-            title={"Add a Reward"}
-            subtitle={"Click to add a new reward."}
-            image={
-              "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
-            }
-          />}
+          {user.isAdmin && (
+            <AddCard
+              classes={styles}
+              title={"Add a Reward"}
+              subtitle={"Click to add a new reward."}
+              image={
+                "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
+              }
+            />
+          )}
         </Grid>
-        {rewards && rewards.map(reward => {
-          return (
-            <Grid item key={reward.imageUrl}>
-              <CustomCard
-                classes={styles2}
-                title={reward.name}
-                subtitle={reward.description}
-                cost={reward.cost}
-                image={reward.imageUrl}
-                onClick={handleOpen}
-              />
-            </Grid>
-          )
-        })}
+        {rewards &&
+          rewards.map((reward) => {
+            return (
+              <Grid item key={reward.imageUrl}>
+                <CustomCard
+                  classes={styles2}
+                  title={reward.name}
+                  subtitle={reward.description}
+                  cost={reward.cost}
+                  image={reward.imageUrl}
+                  onClick={handleOpen}
+                />
+              </Grid>
+            );
+          })}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -205,8 +211,12 @@ export const AllRewards = React.memo(function RewardCard() {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <h2 id="transition-modal-title" justifyContent="center">New Reward</h2>
-              <p id="transition-modal-description">react-transition-group animates me.</p>
+              <h2 id="transition-modal-title" justifyContent="center">
+                New Reward
+              </h2>
+              <p id="transition-modal-description">
+                react-transition-group animates me.
+              </p>
               <form className={classes.form} noValidate>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
@@ -254,10 +264,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 >
                   Create
                 </Button>
-
               </form>
-
-
             </div>
           </Fade>
         </Modal>
@@ -267,4 +274,3 @@ export const AllRewards = React.memo(function RewardCard() {
 });
 
 export default AllRewards;
-

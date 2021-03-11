@@ -16,9 +16,6 @@ const Activity = db.define("activity", {
   },
   points: {
     type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-    },
   },
   imageUrl: {
     type: Sequelize.STRING,

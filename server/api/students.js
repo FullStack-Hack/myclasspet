@@ -33,17 +33,15 @@ router.get("/:studentId/activities", async (req, res, next) => {
   }
 });
 
-
 router.post("/:studentId/activities", async (req, res, next) => {
   try {
-    console.log("REQ.BODY", req.body);
     const student = await Student.findByPk(req.params.studentId);
     const activity = await Activity.create(req.body);
 
     await student.addActivity(activity);
 
     res.status(201).json(activity);
-      } catch (error) {
+  } catch (error) {
     next(error);
   }
 });
@@ -70,8 +68,18 @@ router.delete("/:studentid", async (req, res, next) => {
       },
     });
     res.status(204).end();
-} catch (error) {
+  } catch (error) {
     next(error);
   }
 });
 
+router.put("/:studentId", async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.params.studentId);
+    student.points += req.body.points;
+    await student.save();
+    res.json(student);
+  } catch (error) {
+    next(error);
+  }
+});
