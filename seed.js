@@ -32,23 +32,23 @@ const activities = [
   {
     title: "math",
     description: "2+2",
-    start: new Date("March 4, 2021 02:24:00").toISOString(),
-    end: new Date("March 4, 2021 03:24:00").toISOString(),
-    points: 1,
+    start: new Date("March 11, 2021 02:24:00").toISOString(),
+    end: new Date("March 11, 2021 03:24:00").toISOString(),
+    points: 7,
   },
   {
     title: "reading",
     description: "jack and jill went up the hill",
-    start: new Date("March 4, 2021 01:24:00").toISOString(),
-    end: new Date("March 4, 2021 01:30:00").toISOString(),
-    points: 1,
+    start: new Date("March 11, 2021 01:24:00").toISOString(),
+    end: new Date("March 11, 2021 2:30:00").toISOString(),
+    points: 15,
   },
   {
     title: "exercise",
     description: "run",
-    start: new Date("March 4, 2021 03:30:00").toISOString(),
-    end: new Date("March 4, 2021 03:35:00").toISOString(),
-    points: 1,
+    start: new Date("March 11, 2021 15:30:00").toISOString(),
+    end: new Date("March 11, 2021 16:35:00").toISOString(),
+    points: 3,
   },
 ];
 const rewards = [

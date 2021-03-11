@@ -22,7 +22,7 @@ function ChatComponent({ styleOptions }) {
   }, []);
 
   return (
-    <section>
+    <section className="footer">
       <header>Chat component is using React {React.version}</header>
       <div className="react-container webchat">
         {!!directLine && (

@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { red } from "chalk";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./store";
 
@@ -34,6 +33,7 @@ const Navbar = () => {
         textColor="primary"
         centered
       >
+
         {user.id ? (
           <div>
             <Tab label="Students" component={Link} to="/students" />
@@ -45,6 +45,7 @@ const Navbar = () => {
           <div>
             <Tab label="Login" component={Link} to="/login" />
             <Tab label="Signup" component={Link} to="/signup" />
+
           </div>
         )}
       </Tabs>
@@ -52,20 +53,5 @@ const Navbar = () => {
   );
 };
 
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//   // Hey, check it out! Because we pass the connected UserPage to a Route
-//   // (we do this in client/index.js), it receives the "route props"
-//   // (match, location, and history) as its "own props".
-//   const history = ownProps.history
-
-//   return {
-//     logout:()=> dispatch(logout())
-//     // async handleClick () {
-//     //   const thunk = logout()
-//     //   await dispatch(thunk)
-//     //   history.push('/login')
-//     // }
-//   }
-// }
 
 export default Navbar;
