@@ -1,24 +1,23 @@
 const router = require('express').Router();
 const { Student } = require("../db/models");
-module.exports = router;
 
+// router.get('/me', async (req, res, next) => {
+//     try {
+//         if(!req.session.userId) {
+//             res.sendStatus(401)
+//         } else {
+//             const student = await Student.findById(req.session.userId)
+//             if (!student) {
+//                 res.sendStatus(401)
+//             } else {
+//                 res.json(student)
+//             }
+//         }
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
-router.get('/me', async (req, res, next) => {
-    try {
-        if(!req.session.userId) {
-            res.sendStatus(401)
-        } else {
-            const student = await Student.findById(req.session.userId)
-            if (!student) {
-                res.sendStatus(401)
-            } else {
-                res.json(student)
-            }
-        }
-    } catch (error) {
-        next(error)
-    }
-})
 router.put("/login", async (req, res, next) => {
   console.log("ASLD;AFNSDLVKASD;LEWOIAFN")
   try {
@@ -41,6 +40,9 @@ router.put("/login", async (req, res, next) => {
 });
 
 router.delete('/logout', (req, res) => {
+  console.log('!!!!!!!!!!!!!!!!!',req, req.session)
     delete req.session.studentId;
     res.sendStatus(204)
 })
+
+module.exports = router;

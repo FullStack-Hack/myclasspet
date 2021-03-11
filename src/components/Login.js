@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {login} from './store'
+
 const Login = (props) => {
   const {handleSubmit} = props
 
@@ -33,8 +34,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   // Hey, check it out! Because we pass the connected Login to a Route
   // (we do this in client/index.js), it receives the "route props"
   // (match, location, and history) as its "own props".
-  const history = ownProps.history
-
   return {
     async handleSubmit (evt) {
       try {
@@ -43,7 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         const password = evt.target.password.value;
         console.log('in login.js', email, password)
         await dispatch(login({email, password}));
-        ownProps.history.push('/home');
+        ownProps.history.push('/rewards');
       } catch (error) {
         console.error(error)
       }
