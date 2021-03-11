@@ -31,6 +31,7 @@ const Student = db.define("student", {
 
   points: {
     type: Sequelize.INTEGER,
+
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
