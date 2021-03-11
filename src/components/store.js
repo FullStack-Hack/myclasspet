@@ -57,6 +57,7 @@ export const logout = () => {
 
 export const updatePoints = (activityId, studentId, points) => {
   return async (dispatch) => {
+    console.log("inside store, updatepoints");
     try {
       //update points in activity, student
       await axios.put(`/api/activities/${activityId}`);

@@ -12,9 +12,10 @@ const ActivityForm = ({ activities, setActivities, studentId }) => {
       end: data.endDate + " " + data.endTime,
       points: data.points,
     };
-    console.log(formattedData);
-    await axios.post(`/api/students/${studentId}/activities`, formattedData);
+
     setActivities([...activities, formattedData]);
+    console.log("Activities after submitting", activities);
+    await axios.post(`/api/students/${studentId}/activities`, formattedData);
   };
 
   return (

@@ -53,8 +53,9 @@ router.delete("/:activityId", async (req, res, next) => {
 });
 
 router.put("/:activityId", async (req, res, next) => {
+  console.log("Inside activity");
   try {
-    const activity = await Activity.findByPk(req.body.id);
+    const activity = await Activity.findByPk(req.params.activityId);
     activity.points = 0;
     await activity.save();
 
