@@ -6,6 +6,7 @@ import {
   AllActivities,
   AllRewards,
   Login,
+  Signup,
 } from "../components";
 import { useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ const Routes = () => {
 
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         </div>
 }
         {/* <Route exact path="/home" component={UserPage} /> */}
