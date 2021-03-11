@@ -25,7 +25,7 @@ passport.serializeUser((user, done) => done(null, user.id))
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.models.user.findByPk(id)
+    const user = await db.models.student.findOne({where: {id}})
     done(null, user)
   } catch (err) {
     done(err)
@@ -63,7 +63,7 @@ const createApp = () => {
   // app.get('/hello', (req, res) => {
   //   res.send({ express: 'Hello From Express' });
   // });
-  
+
   // app.post('/world', (req, res) => {
   //   console.log(req.body);
   //   res.send(

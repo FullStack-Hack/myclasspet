@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from "react";
 import Color from "color";
 import GoogleFont from "react-google-font-loader";
@@ -14,6 +15,29 @@ import { whiteBright } from "chalk";
 // import white from "material-ui/colors/white";
 
 import { useSelector } from "react-redux";
+=======
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Color from 'color';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
+import Button from "@material-ui/core/Button";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import axios from "axios";
+>>>>>>> main
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -24,7 +48,7 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
   },
 }));
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(( theme ) => ({
   actionArea: {
     borderRadius: 16,
     // flexBasis: 23,
@@ -68,12 +92,24 @@ const useStyles = makeStyles(() => ({
     fontWeight: 500,
     fontSize: 14,
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    justifyContent: 'center',
+  },
 }));
 
-const AddCard = ({ classes, image, title, subtitle }) => {
+const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
   const mediaStyles = useFourThreeCardMediaStyles();
   return (
-    <CardActionArea className={classes.actionArea}>
+    <CardActionArea className={classes.actionArea} onClick={modalFunction}>
       <Card className={classes.card}>
         <CardMedia classes={mediaStyles} image={image} />
         <CardContent className={classes.content}>
@@ -87,7 +123,7 @@ const AddCard = ({ classes, image, title, subtitle }) => {
   );
 };
 
-const CustomCard = ({ classes, image, title, subtitle }) => {
+const CustomCard = ({ classes, image, title, subtitle, cost }) => {
   const mediaStyles = useFourThreeCardMediaStyles();
   return (
     <CardActionArea className={classes.actionArea}>
@@ -98,6 +134,10 @@ const CustomCard = ({ classes, image, title, subtitle }) => {
             {title}
           </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
+          <CardActions display='flex'>
+            <Typography>{cost} Points</Typography>
+            <Button size="small">Claim This Reward</Button>
+          </CardActions>
         </CardContent>
       </Card>
     </CardActionArea>
@@ -106,11 +146,9 @@ const CustomCard = ({ classes, image, title, subtitle }) => {
 
 export const AllRewards = React.memo(function RewardCard() {
   const gridStyles = useGridStyles();
-  const styles = useStyles({ color: "#808080" });
-  const styles2 = useStyles({ color: "#B8C1EC" });
-  const styles3 = useStyles({ color: "#F6D4A0" });
-  const styles4 = useStyles({ color: "#232946" });
+  const classes = useStyles();
 
+<<<<<<< HEAD
   const { user } = useSelector((state) => state);
   console.log("user in allrewards", user);
   return (
@@ -133,39 +171,142 @@ export const AllRewards = React.memo(function RewardCard() {
               }
             />
           )}
-        </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles2}
-            title={"Reward 3"}
-            subtitle={"Description"}
+=======
+  const {user} = useSelector((state) => state)
+  console.log("USERRRRR:", user)
+
+  const styles = useStyles({ color: '#808080' });
+  const styles2 = useStyles({ color: '#B8C1EC' });
+
+  const [rewards, setRewards] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  async function getRewards() {
+    try {
+      let response = await axios.get("/api/rewards");
+      setRewards(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (rewards === null) {
+      getRewards();
+    }
+  }, [rewards])
+
+  return (
+    <section >
+
+      <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
+        <Grid item onClick={handleOpen}>
+          {user.isAdmin && <AddCard
+            classes={styles}
+            title={"Add a Reward"}
+            subtitle={"Click to add a new reward."}
             image={
-              "https://image.freepik.com/free-vector/icon-gamepad-play-arcade-video-game-gamer-custom-designcartoon-illustration_185390-205.jpg"
+              "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
             }
-          />
+          />}
+>>>>>>> main
         </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles3}
-            title={"Reward 3"}
-            subtitle={"Description"}
-            image={
-              "https://i.pinimg.com/originals/e5/22/fa/e522fa1d1e7ca2e488c35b3af0e313ab.jpg"
-            }
-          />
-        </Grid>
-        <Grid item>
-          <CustomCard
-            classes={styles4}
-            title={"Reward 4"}
-            subtitle={"Description"}
-            image={
-              "https://media.istockphoto.com/vectors/kids-playground-equipment-vector-id628557920?k=6&m=628557920&s=612x612&w=0&h=VOgKLXv82h51lSB3VdB55f9vwoXn0OJcJxPjxCzhtKQ="
-            }
-          />
-        </Grid>
+        {rewards && rewards.map(reward => {
+          return (
+            <Grid item key={reward.imageUrl}>
+              <CustomCard
+                classes={styles2}
+                title={reward.name}
+                subtitle={reward.description}
+                cost={reward.cost}
+                image={reward.imageUrl}
+                onClick={handleOpen}
+              />
+            </Grid>
+          )
+        })}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <h2 id="transition-modal-title" justifyContent="center">New Reward</h2>
+              <p id="transition-modal-description">react-transition-group animates me.</p>
+              <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="fname"
+                      name="firstName"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="First Name"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Create
+                </Button>
+
+              </form>
+
+
+            </div>
+          </Fade>
+        </Modal>
       </Grid>
     </section>
   );
 });
+
 export default AllRewards;
+
