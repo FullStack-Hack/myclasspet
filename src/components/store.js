@@ -26,7 +26,7 @@ export const login = (formData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put("/api/auth/login", formData);
-      console.log("DATAAAAA:", data)
+      console.log("DATAAAAA:", data);
       dispatch(gotMe(data));
     } catch (error) {
       console.error(error);
@@ -57,6 +57,22 @@ export const logout = () => {
     }
   };
 };
+
+export const updatePoints = (activityId, studentId, points) => {
+  return async (dispatch) => {
+    console.log("inside store, updatepoints");
+    try {
+      //update points in activity, student
+      await axios.put(`/api/activities/${activityId}`);
+      await axios.put(`/api/students/${studentId}`, { points });
+
+      dispatch(gotMe(points));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 const initialState = {
   user: {
     // isFetching: true,

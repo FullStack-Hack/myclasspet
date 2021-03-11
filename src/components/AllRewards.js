@@ -132,8 +132,6 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
 };
 
 export const AllRewards = React.memo(function RewardCard() {
-  //if user state -> student, add 'buy' option to each card
-
   const gridStyles = useGridStyles();
   const classes = useStyles();
 
@@ -278,6 +276,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 reward' button.
               </p>
               <form className={classes.form} onSubmit={addReward} noValidate>
+
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField

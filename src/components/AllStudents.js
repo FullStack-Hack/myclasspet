@@ -89,19 +89,23 @@ class AllStudents extends Component {
           <Table.Body>
             {students.map((student, idx) => {
               return (
-                <Link to={`/students/${student.id}/activities`}>
-                  <Table.Row key={idx}>
-                    <Table.Cell>{student.id}</Table.Cell>
-                    <Table.Cell>{student.firstName}</Table.Cell>
-                    <Table.Cell>{student.lastName}</Table.Cell>
-                    <Table.Cell>{student.email}</Table.Cell>
-                    <Table.Cell>
-                      <Button onClick={this.deleteStudent} id={student.id}>
-                        X
-                      </Button>
-                    </Table.Cell>
-                  </Table.Row>
-                </Link>
+                <Table.Row key={idx}>
+                  <Table.Cell>{student.id}</Table.Cell>
+
+                  <Table.Cell>
+                    <Link to={`/students/${student.id}/activities`}>
+                      {student.firstName}
+                    </Link>
+                  </Table.Cell>
+
+                  <Table.Cell>{student.lastName}</Table.Cell>
+                  <Table.Cell>{student.email}</Table.Cell>
+                  <Table.Cell>
+                    <Button onClick={this.deleteStudent} id={student.id}>
+                      X
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
               );
             })}
           </Table.Body>

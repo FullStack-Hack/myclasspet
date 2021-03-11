@@ -30,14 +30,12 @@ const Student = db.define("student", {
   },
   points: {
     type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-    }
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
   }
 })
+
 
 module.exports = Student;
 
