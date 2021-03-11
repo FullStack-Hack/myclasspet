@@ -51,4 +51,13 @@ router.delete('/:rewardId', async (req, res, next) => {
     }
 })
 
+//DELETE one reward by Id
+router.post("/:rewardId", async (req, res, next) => {
+    try {
+        console.log("REWARD REQ:", req.body, "REWARD PARAM", req.params.rewardId)
+    } catch (error) {
+        next(error)
+    }
+  });
+
 module.exports = router;

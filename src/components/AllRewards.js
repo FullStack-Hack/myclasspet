@@ -30,6 +30,9 @@ const useGridStyles = makeStyles(({ breakpoints }) => ({
 }));
 
 const useStyles = makeStyles(( theme ) => ({
+  body: {
+    margin: "7%"
+  },
   actionArea: {
     borderRadius: 16,
     // flexBasis: 23,
@@ -147,7 +150,6 @@ export const AllRewards = React.memo(function RewardCard() {
   const defaultReward = { name: '', description: '', cost: 0, imageUrl: '' }
   const [newReward, setNewReward] = useState(defaultReward);
 
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -171,6 +173,20 @@ export const AllRewards = React.memo(function RewardCard() {
     console.log("CHANGING NR:", newReward)
   }
 
+  const handleDelete = async (rewardId) => {
+    try {
+      console.log("IM IN HAND DEL:", rewardId)
+      await axios.delete(`/api/rewards/${rewardId}`);
+      setRewards(rewards.filter(reward => reward.id !== rewardId))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleClaim = (rewardId, userId) => {
+    console.log("REWARD ID:", rewardId, "USER ID:", userId)
+  }
+
   const addReward = async (event) => {
     try {
       event.preventDefault()
@@ -184,6 +200,10 @@ export const AllRewards = React.memo(function RewardCard() {
     }
   }
 
+  // const claimReward = (event) => {
+
+  // }
+
   useEffect(() => {
     if (rewards === null) {
       getRewards();
@@ -191,8 +211,7 @@ export const AllRewards = React.memo(function RewardCard() {
   }, [rewards])
 
   return (
-    <section >
-
+    <section>
       <Grid classes={gridStyles} container margin={100} spacing={4} wrap={'nowrap'}>
         <Grid item onClick={handleOpen}>
           {user.isAdmin && <AddCard
@@ -206,7 +225,7 @@ export const AllRewards = React.memo(function RewardCard() {
         </Grid>
         {rewards && rewards.map(reward => {
           return (
-            <Grid item key={reward.imageUrl}>
+            <Grid item key={reward.id}>
               <CustomCard
                 classes={styles2}
                 title={reward.name}
@@ -215,6 +234,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 image={reward.imageUrl}
                 onClick={handleOpen}
               />
+              {user.isAdmin && <Button type="button" onClick={() => handleDelete(reward.id)}>Delete This Reward</Button>}
             </Grid>
           )
         })}

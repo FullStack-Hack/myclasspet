@@ -33,7 +33,6 @@ router.get("/:studentId/activities", async (req, res, next) => {
   }
 });
 
-
 router.post("/:studentId/activities", async (req, res, next) => {
   try {
     console.log("REQ.BODY", req.body);
