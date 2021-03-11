@@ -12,9 +12,14 @@ const Reward = require("./reward");
 
 Teacher.hasMany(Student);
 // Activity.belongsToMany(Student);
-// Reward.belongsToMany(Student);
+Reward.belongsToMany(Student, {
+  through: "students_rewards",
+});
+Student.belongsToMany(Reward, {
+  through: "students_rewards",
+});
 Student.hasMany(Activity);
-Student.hasMany(Reward);
+// Student.hasMany(Reward);
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
