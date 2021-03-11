@@ -74,6 +74,7 @@ router.delete("/:studentid", async (req, res, next) => {
 });
 
 router.put("/:studentId", async (req, res, next) => {
+  console.log("Inside student api");
   try {
     const student = await Student.findByPk(req.params.studentId);
     student.points += req.body.points;
