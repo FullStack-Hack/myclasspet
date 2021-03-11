@@ -34,7 +34,7 @@ const Student = db.define("student", {
     validate: {
       min: 1,
     },
-
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
 
