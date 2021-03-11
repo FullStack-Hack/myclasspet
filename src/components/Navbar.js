@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { red } from "chalk";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./store"
 
@@ -34,9 +33,8 @@ const Navbar = () => {
         textColor="primary"
         centered
       >
-        {user.id ? 
+        {user.id ?
           <div>
-
           <Tab label="Students" component={Link} to="/students" />
           <Tab label="Activities" component={Link} to="/activities" />
           <Tab label="Rewards" component={Link} to="/rewards" />

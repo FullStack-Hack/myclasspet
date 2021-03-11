@@ -85,6 +85,10 @@ const useStyles = makeStyles(( theme ) => ({
     padding: theme.spacing(2, 4, 3),
     justifyContent: 'center',
   },
+  submit: {
+    marginTop: '2%',
+    backgroundColor: '#B8C1EC'
+  }
 }));
 
 const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
@@ -140,6 +144,10 @@ export const AllRewards = React.memo(function RewardCard() {
   const [rewards, setRewards] = useState(null);
   const [open, setOpen] = useState(false);
 
+  const defaultReward = { name: '', description: '', cost: 0, imageUrl: '' }
+  const [newReward, setNewReward] = useState(defaultReward);
+
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -154,6 +162,25 @@ export const AllRewards = React.memo(function RewardCard() {
       setRewards(response.data);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const handleChange = event => {
+    const {name, value} = event.target
+    setNewReward({...newReward, [name]: value})
+    console.log("CHANGING NR:", newReward)
+  }
+
+  const addReward = async (event) => {
+    try {
+      event.preventDefault()
+      console.log("NEW REWARD:", newReward)
+      let { data } = await axios.post("/api/rewards", newReward);
+      rewards.push(data);
+      handleClose();
+      setNewReward(defaultReward)
+    } catch (error) {
+      console.log("We encountered an error in creating this reward", error);
     }
   }
 
@@ -205,20 +232,22 @@ export const AllRewards = React.memo(function RewardCard() {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <h2 id="transition-modal-title" justifyContent="center">New Reward</h2>
-              <p id="transition-modal-description">react-transition-group animates me.</p>
-              <form className={classes.form} noValidate>
+              <h2 id="transition-modal-title">New Reward</h2>
+              <p id="transition-modal-description">Please complete the fields below and click on 'create a new reward' button.</p>
+              <form className={classes.form} onSubmit={addReward} noValidate>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
-                      autoComplete="fname"
-                      name="firstName"
+                      autoComplete="name"
+                      name="name"
                       variant="outlined"
                       required
                       fullWidth
-                      id="firstName"
-                      label="First Name"
+                      id="name"
+                      label="Enter a name for the reward"
                       autoFocus
+                      onChange={handleChange}
+                      value={newReward.name}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -226,10 +255,12 @@ export const AllRewards = React.memo(function RewardCard() {
                       variant="outlined"
                       required
                       fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
+                      id="description"
+                      label="Enter a description for the reward"
+                      name="description"
+                      autoComplete="description"
+                      onChange={handleChange}
+                      value={newReward.description}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -237,27 +268,38 @@ export const AllRewards = React.memo(function RewardCard() {
                       variant="outlined"
                       required
                       fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
+                      name="cost"
+                      label="Enter a cost for the reward"
+                      id="cost"
+                      autoComplete="cost"
+                      onChange={handleChange}
+                      value={newReward.cost}
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      name="imageUrl"
+                      label="Paste/enter an image URL for the reward"
+                      id="imageUrl"
+                      autoComplete="imageUrl"
+                      onChange={handleChange}
+                      value={newReward.imageUrl}
+                    />
+                  </Grid>
+                  <br />
                 </Grid>
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="primary"
+                  color="#FFFFFF"
                   className={classes.submit}
                 >
-                  Create
+                  Create a new reward
                 </Button>
-
               </form>
-
-
             </div>
           </Fade>
         </Modal>
