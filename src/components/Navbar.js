@@ -47,13 +47,13 @@ const Navbar = ({ history }) => {
             <Tab label="Rewards" component={Link} to="/rewards" />
             <Tab
               label="Logout"
-              onClick={() => {
-                dispatch(logout());
-                history.push("/login");
-              }}
+              onClick={() =>
+                dispatch(logout())
+              }
             />
           </div>
         ) : (
+          <div>
           <Tab label="Login" component={Link} to="/login" />
           <Tab label="Signup" component={Link} to="/signup" />
           </div>
