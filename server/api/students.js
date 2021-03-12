@@ -1,11 +1,12 @@
 const router = require("express").Router();
-const { Student, Activity } = require("../db/models");
+const { Student, Activity, Reward } = require("../db/models");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
     const students = await Student.findAll({
       attributes: ["id", "email", "firstName", "lastName"],
+      include: [Reward],
     });
     res.json(students);
   } catch (error) {

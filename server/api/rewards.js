@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Student, Reward } = require("../db/models");
+const { Student, Reward, students_rewards } = require("../db/models");
 
 //GET all rewards
 router.get("/", async (req, res, next) => {
