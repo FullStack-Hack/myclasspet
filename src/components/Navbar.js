@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "./store"
+import { logout } from "./store";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +18,8 @@ const Navbar = () => {
   //check for user state, if user -> student, add their points to navbar
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const {user} = useSelector((state) => state)
-  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -33,16 +33,23 @@ const Navbar = () => {
         textColor="primary"
         centered
       >
-        {user.id ?
+        {user.id ? (
           <div>
-          <Tab label="Students" component={Link} to="/students" />
-          <Tab label="Activities" component={Link} to="/activities" />
-          <Tab label="Rewards" component={Link} to="/rewards" />
-          <Tab label="Logout" onClick={() => dispatch(logout())} />
+            {user.isAdmin ? (
+              <Tab label="Students" component={Link} to="/students" />
+            ) : (
+              <Tab
+                label="Schedule"
+                component={Link}
+                to={`/students/${user.id}/activities`}
+              />
+            )}
+            <Tab label="Rewards" component={Link} to="/rewards" />
+            <Tab label="Logout" onClick={() => dispatch(logout())} />
           </div>
-          :
-        <Tab label="Login" component={Link} to="/login" />
-        }
+        ) : (
+          <Tab label="Login" component={Link} to="/login" />
+        )}
       </Tabs>
     </Paper>
   );
@@ -64,4 +71,4 @@ const Navbar = () => {
 //   }
 // }
 
-export default (Navbar);
+export default Navbar;

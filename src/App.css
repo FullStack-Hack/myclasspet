@@ -84,6 +84,13 @@ header nav {
 }
 .calendar > div {
   width: 100%;
+  flex: 1;
+}
+.points {
+  flex: 1;
+  align-self: center;
+  color: green;
+  font-size: 3rem;
 }
 
 .form {
