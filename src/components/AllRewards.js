@@ -136,7 +136,6 @@ export const AllRewards = React.memo(function RewardCard() {
   const classes = useStyles();
 
   const { user } = useSelector((state) => state);
-  console.log("USERRRRR:", user);
 
   const styles = useStyles({ color: "#808080" });
   const styles2 = useStyles({ color: "#B8C1EC" });
@@ -146,6 +145,7 @@ export const AllRewards = React.memo(function RewardCard() {
 
   const defaultReward = { name: "", description: "", cost: 0, imageUrl: "" };
   const [newReward, setNewReward] = useState(defaultReward);
+  const [myPoints, setMyPoints] = useState({points: user.points});
 
   const handleOpen = () => {
     setOpen(true);
@@ -167,7 +167,6 @@ export const AllRewards = React.memo(function RewardCard() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewReward({ ...newReward, [name]: value });
-    console.log("CHANGING NR:", newReward);
   };
 
   const handleDelete = async (rewardId) => {
@@ -179,10 +178,11 @@ export const AllRewards = React.memo(function RewardCard() {
     }
   };
 
-  const handleClaim = async (rewardId, studentId) => {
+  const handleClaim = async (rewardId, points, studentId) => {
     try {
-      // console.log("REWARD ID:", rewardId, "USER ID:", studentId);
       await axios.put("/api/rewards", { rewardId, studentId });
+      const updatedStudent = await axios.put(`/api/students/${studentId}`, {points: 7})
+      setMyPoints({ points: updatedStudent.data.points});
     } catch (error) {
       console.log(error);
     }
@@ -191,7 +191,6 @@ export const AllRewards = React.memo(function RewardCard() {
   const addReward = async (event) => {
     try {
       event.preventDefault();
-      console.log("NEW REWARD:", newReward);
       let { data } = await axios.post("/api/rewards", newReward);
       rewards.push(data);
       handleClose();
@@ -209,6 +208,7 @@ export const AllRewards = React.memo(function RewardCard() {
 
   return (
     <section>
+      <div>My Points: {myPoints.points} </div>
       <Grid
         classes={gridStyles}
         container
@@ -248,7 +248,7 @@ export const AllRewards = React.memo(function RewardCard() {
                 {!user.isAdmin && (
                   <Button
                     type="button"
-                    onClick={() => handleClaim(reward.id, user.id)}
+                    onClick={() => handleClaim(reward.id, reward.cost, user.id)}
                   >
                     Claim This Reward
                   </Button>
