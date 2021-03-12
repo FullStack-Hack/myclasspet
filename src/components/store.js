@@ -34,6 +34,18 @@ export const login = (formData) => {
   };
 };
 
+export const signUp = (userBody) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.post('/api/students/add', userBody)
+      console.log('!!!!!!!!!!store.js',data)
+      dispatch(gotMe(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 // export const fetchMe = () => {
 //   return async (dispatch) => {
 //     dispatch(setFetchingStatus(true));

@@ -55,26 +55,13 @@ const Navbar = ({ history }) => {
           </div>
         ) : (
           <Tab label="Login" component={Link} to="/login" />
+          <Tab label="Signup" component={Link} to="/signup" />
+          </div>
         )}
       </Tabs>
     </Paper>
   );
 };
 
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//   // Hey, check it out! Because we pass the connected UserPage to a Route
-//   // (we do this in client/index.js), it receives the "route props"
-//   // (match, location, and history) as its "own props".
-//   const history = ownProps.history
-
-//   return {
-//     logout:()=> dispatch(logout())
-//     // async handleClick () {
-//     //   const thunk = logout()
-//     //   await dispatch(thunk)
-//     //   history.push('/login')
-//     // }
-//   }
-// }
 
 export default Navbar;
