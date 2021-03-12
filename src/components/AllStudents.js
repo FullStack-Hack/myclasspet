@@ -20,6 +20,7 @@ class AllStudents extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getStudents = this.getStudents.bind(this);
     this.deleteStudent = this.deleteStudent.bind(this);
+    this.redeemReward = this.redeemReward.bind(this);
   }
   toggleAddStudent() {
     this.setState({ addStudentForm: !this.state.addStudentForm });
@@ -53,6 +54,19 @@ class AllStudents extends Component {
       console.log(error);
     }
   }
+  async redeemReward(event) {
+    console.log("redeem reward(");
+    try {
+      await axios.put("api/rewards/remove", {
+        studentId: event.target.attributes.studentid.value,
+        rewardId: event.target.attributes.rewardid.value,
+      });
+      console.log("redeemed");
+    } catch (error) {
+      console.log(error);
+    }
+    this.getStudents();
+  }
   async deleteStudent(event) {
     try {
       await axios.delete(`api/students/${event.target.id}`);
@@ -64,6 +78,7 @@ class AllStudents extends Component {
 
   render() {
     let { students } = this.state;
+
     console.log(students, "this is students during render");
     return (
       <div>
@@ -87,11 +102,15 @@ class AllStudents extends Component {
               <Table.HeaderCell>First Name</Table.HeaderCell>
               <Table.HeaderCell>Last Name</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
-              <Table.HeaderCell>Rewards Available</Table.HeaderCell>
+              <Table.HeaderCell>
+                Rewards Available <br />
+                (click to redeem)
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {students.map((student, idx) => {
+              let { rewards } = student;
               return (
                 <Table.Row key={idx}>
                   <Table.Cell>{student.id}</Table.Cell>
@@ -105,8 +124,16 @@ class AllStudents extends Component {
                   <Table.Cell>{student.lastName}</Table.Cell>
                   <Table.Cell>{student.email}</Table.Cell>
                   <Table.Cell>
-                    {student.rewards.map((reward) => {
-                      return reward.name + " || ";
+                    {rewards.map((reward) => {
+                      return (
+                        <Button
+                          studentid={student.id}
+                          rewardid={reward.id}
+                          onClick={this.redeemReward}
+                        >
+                          {reward.name}
+                        </Button>
+                      );
                     }) || ""}
                   </Table.Cell>
 

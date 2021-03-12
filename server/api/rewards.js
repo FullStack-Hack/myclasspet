@@ -50,6 +50,16 @@ router.put("/", async (req, res, next) => {
   }
 });
 
+router.put("/remove", async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.body.studentId);
+    const reward = await Reward.findByPk(req.body.rewardId);
+    await student.removeReward(reward);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //POST one reward
 router.post("/", async (req, res, next) => {
   try {
