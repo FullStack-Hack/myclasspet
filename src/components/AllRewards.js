@@ -181,7 +181,10 @@ export const AllRewards = React.memo(function RewardCard() {
   const handleClaim = async (rewardId, points, studentId) => {
     try {
       await axios.put("/api/rewards", { rewardId, studentId });
-      const updatedStudent = await axios.put(`/api/students/${studentId}`, {points: 7})
+      points *= -1
+      console.log("POINTS:::", points)
+      const updatedStudent = await axios.put(`/api/students/${studentId}`, {points: points})
+      console.log("USDP::", updatedStudent.data.points)
       setMyPoints({ points: updatedStudent.data.points});
     } catch (error) {
       console.log(error);
