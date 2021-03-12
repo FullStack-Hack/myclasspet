@@ -13,6 +13,7 @@ class AllStudents extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      rewards: [],
     };
     this.toggleAddStudent = this.toggleAddStudent.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -34,6 +35,7 @@ class AllStudents extends Component {
       console.log(error);
     }
   }
+
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -62,6 +64,7 @@ class AllStudents extends Component {
 
   render() {
     let { students } = this.state;
+    console.log(students, "this is students during render");
     return (
       <div>
         <div className="add-student-container">
@@ -84,6 +87,7 @@ class AllStudents extends Component {
               <Table.HeaderCell>First Name</Table.HeaderCell>
               <Table.HeaderCell>Last Name</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>Rewards Available</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -100,6 +104,12 @@ class AllStudents extends Component {
 
                   <Table.Cell>{student.lastName}</Table.Cell>
                   <Table.Cell>{student.email}</Table.Cell>
+                  <Table.Cell>
+                    {student.rewards.map((reward) => {
+                      return reward.name + " || ";
+                    }) || ""}
+                  </Table.Cell>
+
                   <Table.Cell>
                     <Button onClick={this.deleteStudent} id={student.id}>
                       X
