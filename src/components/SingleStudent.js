@@ -40,28 +40,14 @@ const SingleStudent = ({ match }) => {
   };
 
   const dispatch = useDispatch();
-  console.log(activities);
+
   const handleEventClick = (clickInfo) => {
     const currentTime = new Date().toISOString();
-    console.log(clickInfo.event);
 
     if (clickInfo.event.extendedProps.points !== 0 && !user.isAdmin) {
       const activity = activities.filter(
-        (elem) =>
-          // elem.title === clickInfo.event.title &&
-          // elem.start === clickInfo.event.start.toISOString() &&
-          // elem.end === clickInfo.event.end.toISOString()
-          elem.id == clickInfo.event.id
+        (elem) => elem.id == clickInfo.event.id
       )[0];
-
-      console.log(
-        "activityid",
-        activity.id,
-        "//userid",
-        user.id,
-        "//clickInfopoits",
-        clickInfo.event.extendedProps.points
-      );
 
       //should work fully once we seperate adding the activity form from the student view
       if (activity.end <= currentTime) {
@@ -85,7 +71,6 @@ const SingleStudent = ({ match }) => {
     <div className="single_student">
       <div className="calendar">
         <FullCalendar
-          className="calendar"
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridDay"
           events={activities}
@@ -93,12 +78,16 @@ const SingleStudent = ({ match }) => {
           eventClick={handleEventClick}
         />
       </div>
-      <ActivityForm
-        studentId={match.params.studentId}
-        activities={activities}
-        setActivities={setActivities}
-      />
-      POINTS: {points}
+      <div class="form_points">
+        {user.isAdmin && (
+          <ActivityForm
+            studentId={match.params.studentId}
+            activities={activities}
+            setActivities={setActivities}
+          />
+        )}
+        <div class="points">POINTS: {points}</div>
+      </div>
     </div>
   );
 };

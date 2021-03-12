@@ -84,6 +84,15 @@ header nav {
 }
 .calendar > div {
   width: 100%;
+  flex: 1;
+}
+.form_points {
+  flex: 1;
+}
+
+.points {
+  font-size: 3rem;
+  margin-top: 1rem;
 }
 
 .form {
