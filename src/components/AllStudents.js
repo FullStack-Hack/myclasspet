@@ -44,7 +44,7 @@ class AllStudents extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      await axios.post("/api/students/add", {
+      await axios.post("/api/students/", {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
@@ -55,13 +55,15 @@ class AllStudents extends Component {
     }
   }
   async redeemReward(event) {
-    console.log("redeem reward(");
+    event.preventDefault();
+    console.log("redeem reward");
+    let payload = {
+      studentId: event.target.attributes.studentid.value,
+      rewardId: event.target.attributes.rewardid.value,
+    };
     try {
-      await axios.put("api/rewards/remove", {
-        studentId: event.target.attributes.studentid.value,
-        rewardId: event.target.attributes.rewardid.value,
-      });
-      console.log("redeemed");
+      let redeemed = await axios.put("api/students/reward", payload);
+      console.log("redeemed", redeemed.data);
     } catch (error) {
       console.log(error);
     }
@@ -124,9 +126,10 @@ class AllStudents extends Component {
                   <Table.Cell>{student.lastName}</Table.Cell>
                   <Table.Cell>{student.email}</Table.Cell>
                   <Table.Cell>
-                    {rewards.map((reward) => {
+                    {rewards.map((reward, idx) => {
                       return (
                         <Button
+                          key={idx}
                           studentid={student.id}
                           rewardid={reward.id}
                           onClick={this.redeemReward}

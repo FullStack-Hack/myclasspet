@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Student, Reward, students_rewards } = require("../db/models");
+const { Student, Reward } = require("../db/models");
 
 //GET all rewards
 router.get("/", async (req, res, next) => {
@@ -50,15 +50,17 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.put("/remove", async (req, res, next) => {
-  try {
-    const student = await Student.findByPk(req.body.studentId);
-    const reward = await Reward.findByPk(req.body.rewardId);
-    await student.removeReward(reward);
-  } catch (error) {
-    console.log(error);
-  }
-});
+// //remove a reward from a student's rewards array
+// router.put("/remove", async (req, res, next) => {
+//   try {
+//     const currentstudent = await Student.findByPk(req.body.studentId);
+//     const currentreward = await Reward.findByPk(req.body.rewardId);
+//     await currentstudent.removeReward(currentreward);
+//     res.status(201).json(currentreward);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 //POST one reward
 router.post("/", async (req, res, next) => {

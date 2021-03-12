@@ -15,7 +15,6 @@ const gotMe = (user) => ({
 });
 const removeUser = () => ({ type: REMOVE_USER });
 
-
 // const setFetchingStatus = (isFetching) => ({
 //   type: SET_FETCHING_STATUS,
 //   isFetching,
@@ -37,14 +36,14 @@ export const login = (formData) => {
 export const signUp = (userBody) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.post('/api/students/add', userBody)
-      console.log('!!!!!!!!!!store.js',data)
-      dispatch(gotMe(data))
+      const { data } = await axios.post("/api/students/", userBody);
+      console.log("!!!!!!!!!!store.js", data);
+      dispatch(gotMe(data));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-}
+  };
+};
 
 // export const fetchMe = () => {
 //   return async (dispatch) => {
