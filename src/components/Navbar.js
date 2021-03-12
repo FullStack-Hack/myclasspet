@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ history }) => {
   //check for user state, if user -> student, add their points to navbar
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -45,7 +45,13 @@ const Navbar = () => {
               />
             )}
             <Tab label="Rewards" component={Link} to="/rewards" />
-            <Tab label="Logout" onClick={() => dispatch(logout())} />
+            <Tab
+              label="Logout"
+              onClick={() => {
+                dispatch(logout());
+                history.push("/login");
+              }}
+            />
           </div>
         ) : (
           <Tab label="Login" component={Link} to="/login" />

@@ -78,14 +78,16 @@ const SingleStudent = ({ match }) => {
           eventClick={handleEventClick}
         />
       </div>
-      {user.isAdmin && (
-        <ActivityForm
-          studentId={match.params.studentId}
-          activities={activities}
-          setActivities={setActivities}
-        />
-      )}
-      <div class="points">POINTS: {points}</div>
+      <div class="form_points">
+        {user.isAdmin && (
+          <ActivityForm
+            studentId={match.params.studentId}
+            activities={activities}
+            setActivities={setActivities}
+          />
+        )}
+        <div class="points">POINTS: {points}</div>
+      </div>
     </div>
   );
 };

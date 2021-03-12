@@ -86,11 +86,13 @@ header nav {
   width: 100%;
   flex: 1;
 }
-.points {
+.form_points {
   flex: 1;
-  align-self: center;
-  color: green;
+}
+
+.points {
   font-size: 3rem;
+  margin-top: 1rem;
 }
 
 .form {
