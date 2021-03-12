@@ -76,7 +76,6 @@ router.delete("/:studentid", async (req, res, next) => {
   }
 });
 router.put("/reward", async (req, res, next) => {
-  console.log("hit students/reward");
   try {
     const currentstudent = await Student.findByPk(req.body.studentId);
     const currentreward = await Reward.findByPk(req.body.rewardId);

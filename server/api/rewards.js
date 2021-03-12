@@ -37,9 +37,7 @@ router.delete("/:rewardId", async (req, res, next) => {
 
 //POST claim a reward
 router.put("/", async (req, res, next) => {
-  //   console.log("REWARD REQ:", req.body);
   try {
-    // console.log("in try/catch");
     const student = await Student.findByPk(req.body.studentId);
     const reward = await Reward.findByPk(req.body.rewardId);
 
@@ -49,18 +47,6 @@ router.put("/", async (req, res, next) => {
     next(error);
   }
 });
-
-// //remove a reward from a student's rewards array
-// router.put("/remove", async (req, res, next) => {
-//   try {
-//     const currentstudent = await Student.findByPk(req.body.studentId);
-//     const currentreward = await Reward.findByPk(req.body.rewardId);
-//     await currentstudent.removeReward(currentreward);
-//     res.status(201).json(currentreward);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
 
 //POST one reward
 router.post("/", async (req, res, next) => {

@@ -56,14 +56,12 @@ class AllStudents extends Component {
   }
   async redeemReward(event) {
     event.preventDefault();
-    console.log("redeem reward");
     let payload = {
       studentId: event.target.attributes.studentid.value,
       rewardId: event.target.attributes.rewardid.value,
     };
     try {
-      let redeemed = await axios.put("api/students/reward", payload);
-      console.log("redeemed", redeemed.data);
+      await axios.put("api/students/reward", payload);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +79,6 @@ class AllStudents extends Component {
   render() {
     let { students } = this.state;
 
-    console.log(students, "this is students during render");
     return (
       <div>
         <div className="add-student-container">
