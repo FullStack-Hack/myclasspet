@@ -9,7 +9,7 @@ const databaseName =
 // const db = new Sequelize(process.env.DATABASE_URL, {
 //   logging: false,
 // });
-
+//hello world
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
   {
