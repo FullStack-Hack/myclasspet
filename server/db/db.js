@@ -15,15 +15,16 @@ const db = new Sequelize(
   {
     logging: false,
     operatorAliases: false,
-    dialect: 'postgres',
-    protocol: 'postgres',
+    dialect: "postgres",
+    protocol: "postgres",
     ssl: true,
     dialectOptions: {
       ssl: process.env.DATABASE_URL && {
-        require: true
-      }
-    }
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   }
-)
+);
 
 module.exports = db;
