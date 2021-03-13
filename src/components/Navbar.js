@@ -6,8 +6,13 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./store";
+import TodayIcon from '@material-ui/icons/Today';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
+import GradeIcon from '@material-ui/icons/Grade';
+import GroupIcon from '@material-ui/icons/Group';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     backgroundColor: "#B8C1EC",
@@ -35,17 +40,23 @@ const Navbar = ({ history }) => {
             centered
           >
             {user.isAdmin ? (
-              <Tab label="Students" component={Link} to="/students" />
+              <Tab
+                label="Students"
+                icon={<GroupIcon />}
+                component={Link}
+                to="/students" />
             ) : (
               <Tab
                 label="Schedule"
+                icon={<TodayIcon />}
                 component={Link}
                 to={`/students/${user.id}/activities`}
               />
             )}
-            <Tab label="Rewards" component={Link} to="/rewards" />
+            <Tab label="Rewards" icon={<GradeIcon />} component={Link} to="/rewards" />
             <Tab
               label="Logout"
+              icon={<ExitToAppIcon />}
               onClick={() =>
                 dispatch(logout())
               }
@@ -59,8 +70,8 @@ const Navbar = ({ history }) => {
             textColor="primary"
             centered
           >
-            <Tab label="Login" component={Link} to="/login" />
-            <Tab label="Signup" component={Link} to="/signup" />
+            <Tab label="Login" icon={<HomeIcon />} component={Link} to="/login" />
+            <Tab label="Signup" icon={<HomeIcon />} component={Link} to="/signup" />
           </Tabs>
         )}
     </Paper>
