@@ -26,15 +26,14 @@ const Navbar = ({ history }) => {
 
   return (
     <Paper className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        centered
-      >
         {user.id ? (
-          <div>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
             {user.isAdmin ? (
               <Tab label="Students" component={Link} to="/students" />
             ) : (
@@ -51,14 +50,19 @@ const Navbar = ({ history }) => {
                 dispatch(logout())
               }
             />
-          </div>
+          </Tabs>
         ) : (
-          <div>
-          <Tab label="Login" component={Link} to="/login" />
-          <Tab label="Signup" component={Link} to="/signup" />
-          </div>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Login" component={Link} to="/login" />
+            <Tab label="Signup" component={Link} to="/signup" />
+          </Tabs>
         )}
-      </Tabs>
     </Paper>
   );
 };

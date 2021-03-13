@@ -49,13 +49,11 @@ const SingleStudent = ({ match }) => {
         (elem) => elem.id == clickInfo.event.id
       )[0];
 
-      //should work fully once we seperate adding the activity form from the student view
       if (activity.end <= currentTime) {
         setPoints(points + clickInfo.event.extendedProps.points);
 
         dispatch(
           updatePoints(
-            // activity.id,
             user.id,
             clickInfo.event.extendedProps.points
           )
