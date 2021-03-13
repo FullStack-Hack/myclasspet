@@ -5,16 +5,21 @@ import axios from "axios";
 
 //action type
 const GET_USER = "GET_USER";
+const UPDATE_USER = "UPDATE_USER";
 const REMOVE_USER = "REMOVE_USER";
 // const SET_FETCHING_STATUS = "SET_FETCHING_STATUS";
 
 //action creator
 const gotMe = (user) => ({
   type: GET_USER,
-  user,
+  user
 });
 const removeUser = () => ({ type: REMOVE_USER });
 
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  user
+});
 
 // const setFetchingStatus = (isFetching) => ({
 //   type: SET_FETCHING_STATUS,
@@ -70,15 +75,15 @@ export const logout = () => {
   };
 };
 
-export const updatePoints = (activityId, studentId, points) => {
+export const updatePoints = (studentId, points) => {
   return async (dispatch) => {
-    console.log("inside store, updatepoints");
+    console.log("inside store, updatepoints", studentId, points);
     try {
       //update points in activity, student
-      await axios.put(`/api/activities/${activityId}`);
-      await axios.put(`/api/students/${studentId}`, { points });
-
-      dispatch(gotMe(points));
+      // await axios.put(`/api/activities/${activityId}`);
+      const { data } = await axios.put(`/api/students/${studentId}`, {points: points})
+      console.log("USIDTHUNK:", data)
+      dispatch(gotMe(data));
     } catch (error) {
       console.error(error);
     }
@@ -98,6 +103,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, ...action.user },
       };
+    case UPDATE_USER:
+      return { user: action.user }
     case REMOVE_USER:
       return initialState;
     // case SET_FETCHING_STATUS:

@@ -55,7 +55,7 @@ const SingleStudent = ({ match }) => {
 
         dispatch(
           updatePoints(
-            activity.id,
+            // activity.id,
             user.id,
             clickInfo.event.extendedProps.points
           )
