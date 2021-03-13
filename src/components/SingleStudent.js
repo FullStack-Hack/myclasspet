@@ -44,7 +44,7 @@ const SingleStudent = ({ match }) => {
   const handleEventClick = (clickInfo) => {
     const currentTime = new Date().toISOString();
 
-    if (clickInfo.event.extendedProps.points !== 0 && !user.isAdmin) {
+    if (clickInfo.event.extendedProps.points !== 0 && user.isAdmin) {
       const activity = activities.filter(
         (elem) => elem.id == clickInfo.event.id
       )[0];
@@ -62,7 +62,7 @@ const SingleStudent = ({ match }) => {
         );
         clickInfo.event.setExtendedProp("points", 0);
       } else {
-        alert("You haven't completed this yet!");
+        alert("This task isn't completed yet.");
       }
     }
   };
