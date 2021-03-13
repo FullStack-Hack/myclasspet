@@ -100,46 +100,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
-  const mediaStyles = useFourThreeCardMediaStyles();
-  return (
-    <CardActionArea className={classes.actionArea} onClick={modalFunction}>
-      <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image}></CardMedia>
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={"h3"}>
-            {title}
-          </Typography>
-          <Typography className={classes.subtitle}>{subtitle}</Typography>
-        </CardContent>
-      </Card>
-    </CardActionArea>
-  );
-};
-
-const CustomCard = ({ classes, image, title, subtitle, cost }) => {
-  const mediaStyles = useFourThreeCardMediaStyles();
-  return (
-    <CardActionArea className={classes.actionArea}>
-      <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image}>
-          <IconButton aria-label="delete" calsses={classes.delete}>
-            <DeleteIcon />
-          </IconButton>
-        </CardMedia>
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={"h3"}>
-            {title}
-          </Typography>
-          <Typography className={classes.subtitle} variant={"h3"}>
-            ( {cost} Points )
-          </Typography>
-          <Typography className={classes.subtitle}>{subtitle}</Typography>
-        </CardContent>
-      </Card>
-    </CardActionArea>
-  );
-};
+// const CustomCard = ({ classes, image, title, subtitle, cost }) => {
+//   const mediaStyles = useFourThreeCardMediaStyles();
+//   return (
+//     <CardActionArea className={classes.actionArea}>
+//       <Card className={classes.card}>
+//         <CardMedia classes={mediaStyles} image={image}>
+//           <IconButton aria-label="delete" calsses={classes.delete}>
+//             <DeleteIcon />
+//           </IconButton>
+//         </CardMedia>
+//         <CardContent className={classes.content}>
+//           <Typography className={classes.title} variant={"h3"}>
+//             {title}
+//           </Typography>
+//           <Typography className={classes.subtitle} variant={"h3"}>
+//             ( {cost} Points )
+//           </Typography>
+//           <Typography className={classes.subtitle}>{subtitle}</Typography>
+//         </CardContent>
+//       </Card>
+//     </CardActionArea>
+//   );
+// };
 
 export const AllRewards = React.memo(function RewardCard() {
 
@@ -152,6 +135,7 @@ export const AllRewards = React.memo(function RewardCard() {
 
   const styles = useStyles({ color: "#808080" });
   const styles2 = useStyles({ color: "#B8C1EC" });
+  const mediaStyles = useFourThreeCardMediaStyles();
 
   const [rewards, setRewards] = useState(null);
   const [open, setOpen] = useState(false);
@@ -236,46 +220,57 @@ export const AllRewards = React.memo(function RewardCard() {
         spacing={4}
         // wrap={"nowrap"}
       >
-        <Grid item onClick={handleOpen}>
+        <Grid item>
           {user.isAdmin && (
-            <AddCard
-              classes={styles}
-              title={"Add a Reward"}
-              subtitle={"Click to add a new reward."}
-              image={
-                "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
-              }
-            />
+            <CardActionArea className={styles.actionArea} onClick={handleOpen}>
+              <Card className={styles.card}>
+                <CardMedia classes={mediaStyles} image="https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"></CardMedia>
+                <CardContent classes={styles} className={styles.content}>
+                  <Typography className={styles.title} variant={"h3"}>
+                    Add a Reward
+                  </Typography>
+                  <Typography className={styles.subtitle}>Click to add a new reward</Typography>
+                </CardContent>
+              </Card>
+            </CardActionArea>
           )}
         </Grid>
         {rewards &&
           rewards.map((reward) => {
             return (
               <Grid item key={reward.id}>
-                <CustomCard
+                {/* <CustomCard
                   classes={styles2}
                   title={reward.name}
                   subtitle={reward.description}
                   cost={reward.cost}
                   image={reward.imageUrl}
                   onClick={handleOpen}
-                />
-                {user.isAdmin && (
-                  <Button type="button" onClick={() => handleDelete(reward.id)}>
-                    Delete This Reward
-                  </Button>
-                )}
-                {!user.isAdmin && (
-                  <Button
-                    type="button"
-                    onClick={() => handleClaim(reward.id, reward.cost, user.id)}
-                  >
-                    Claim This Reward
-                  </Button>
-                )}
+                /> */}
+              <CardActionArea className={styles2.actionArea}>
+                  <Card className={styles2.card} onClick={() => handleClaim(reward.id, reward.cost, user.id)}>
+                    <CardMedia classes={mediaStyles} image={reward.imageUrl}>
+                      {user.isAdmin && (
+                        <IconButton aria-label="delete" calsses={styles2.delete}>
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
+                    </CardMedia>
+                    <CardContent className={styles2.content}>
+                      <Typography className={styles2.title} variant={"h3"}>
+                        {reward.name}
+                      </Typography>
+                      <Typography className={styles2.subtitle} variant={"h3"}>
+                        ( {reward.cost} Points )
+                      </Typography>
+                      <Typography className={styles2.subtitle}>{reward.description}</Typography>
+                    </CardContent>
+                  </Card>
+                </CardActionArea>
               </Grid>
             );
           })}
+
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
