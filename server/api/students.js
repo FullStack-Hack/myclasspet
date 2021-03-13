@@ -47,7 +47,7 @@ router.post("/:studentId/activities", async (req, res, next) => {
   }
 });
 
-router.post("/add", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const student = new Student({
       firstName: req.body.firstName,
@@ -71,6 +71,16 @@ router.delete("/:studentid", async (req, res, next) => {
       },
     });
     res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
+router.put("/reward", async (req, res, next) => {
+  try {
+    const currentstudent = await Student.findByPk(req.body.studentId);
+    const currentreward = await Reward.findByPk(req.body.rewardId);
+    await currentstudent.removeReward(currentreward);
+    res.status(201).json(currentreward).end();
   } catch (error) {
     next(error);
   }
