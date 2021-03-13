@@ -11,6 +11,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import GradeIcon from '@material-ui/icons/Grade';
 import GroupIcon from '@material-ui/icons/Group';
+import RedeemIcon from '@material-ui/icons/Redeem';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -53,7 +55,7 @@ const Navbar = ({ history }) => {
                 to={`/students/${user.id}/activities`}
               />
             )}
-            <Tab label="Rewards" icon={<GradeIcon />} component={Link} to="/rewards" />
+            <Tab label="Rewards" icon={<RedeemIcon />} component={Link} to="/rewards" />
             <Tab
               label="Logout"
               icon={<ExitToAppIcon />}

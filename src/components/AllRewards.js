@@ -17,6 +17,8 @@ import Fade from "@material-ui/core/Fade";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { updatePoints } from "./store";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
@@ -61,16 +63,14 @@ const useStyles = makeStyles((theme) => ({
     };
   },
   title: {
-    fontFamily: "Keania One",
     fontSize: "1rem",
     color: "#FFFFFF",
     textTransform: "uppercase",
   },
   subtitle: {
-    fontFamily: "Montserrat",
     color: "#FFFFFF",
     opacity: 0.87,
-    marginTop: "2rem",
+    marginTop: ".5rem",
     fontWeight: 500,
     fontSize: 14,
   },
@@ -84,12 +84,20 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   submit: {
     marginTop: "2%",
     backgroundColor: "#B8C1EC",
   },
+  delete: {
+    // marginTop: "1%",
+    // marginRight: "0",
+    // width: "100px",
+    position: "relative",
+    // zIndex: "100",
+    float: "right"
+  }
 }));
 
 const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
@@ -97,7 +105,7 @@ const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
   return (
     <CardActionArea className={classes.actionArea} onClick={modalFunction}>
       <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image} />
+        <CardMedia classes={mediaStyles} image={image}></CardMedia>
         <CardContent className={classes.content}>
           <Typography className={classes.title} variant={"h3"}>
             {title}
@@ -114,15 +122,19 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
   return (
     <CardActionArea className={classes.actionArea}>
       <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image} />
+        <CardMedia classes={mediaStyles} image={image}>
+          <IconButton aria-label="delete" calsses={classes.delete}>
+            <DeleteIcon />
+          </IconButton>
+        </CardMedia>
         <CardContent className={classes.content}>
           <Typography className={classes.title} variant={"h3"}>
             {title}
           </Typography>
+          <Typography className={classes.subtitle} variant={"h3"}>
+            ( {cost} Points )
+          </Typography>
           <Typography className={classes.subtitle}>{subtitle}</Typography>
-          <CardActions display="flex">
-            <Typography>{cost} Points</Typography>
-          </CardActions>
         </CardContent>
       </Card>
     </CardActionArea>
