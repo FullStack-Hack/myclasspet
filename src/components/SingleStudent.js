@@ -44,25 +44,23 @@ const SingleStudent = ({ match }) => {
   const handleEventClick = (clickInfo) => {
     const currentTime = new Date().toISOString();
 
-    if (clickInfo.event.extendedProps.points !== 0 && !user.isAdmin) {
+    if (clickInfo.event.extendedProps.points !== 0 && user.isAdmin) {
       const activity = activities.filter(
         (elem) => elem.id == clickInfo.event.id
       )[0];
 
-      //should work fully once we seperate adding the activity form from the student view
       if (activity.end <= currentTime) {
         setPoints(points + clickInfo.event.extendedProps.points);
 
         dispatch(
           updatePoints(
-            activity.id,
             user.id,
             clickInfo.event.extendedProps.points
           )
         );
         clickInfo.event.setExtendedProp("points", 0);
       } else {
-        alert("You haven't completed this yet!");
+        alert("This task isn't completed yet.");
       }
     }
   };

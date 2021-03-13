@@ -24,7 +24,6 @@ const students = [
     password: "1234",
     firstName: "tom",
     lastName: "nook",
-    points: 5,
     isAdmin: true,
   },
 ];

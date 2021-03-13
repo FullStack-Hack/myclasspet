@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Color from "color";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -15,17 +15,15 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import axios from "axios";
+import { updatePoints } from "./store";
+
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
-    [breakpoints.up("md")]: {
       display: "flex",
       justifyContent: "center",
-    },
+      marginTop: "5%"
   },
 }));
 
@@ -132,6 +130,9 @@ const CustomCard = ({ classes, image, title, subtitle, cost }) => {
 };
 
 export const AllRewards = React.memo(function RewardCard() {
+
+  const dispatch = useDispatch()
+
   const gridStyles = useGridStyles();
   const classes = useStyles();
 
@@ -180,12 +181,14 @@ export const AllRewards = React.memo(function RewardCard() {
 
   const handleClaim = async (rewardId, points, studentId) => {
     try {
-      await axios.put("/api/rewards", { rewardId, studentId });
-      points *= -1
-      console.log("POINTS:::", points)
-      const updatedStudent = await axios.put(`/api/students/${studentId}`, {points: points})
-      console.log("USDP::", updatedStudent.data.points)
-      setMyPoints({ points: updatedStudent.data.points});
+      if (points > user.points) {
+        alert("You don't have enough points yet. Keep going! <3");
+      } else {
+        await axios.put("/api/rewards", { rewardId, studentId });
+        points *= -1
+        setMyPoints({ points: user.points + points});
+        dispatch(updatePoints(studentId, points));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -211,13 +214,15 @@ export const AllRewards = React.memo(function RewardCard() {
 
   return (
     <section>
-      <div>My Points: {myPoints.points} </div>
+      {!user.isAdmin && (
+        <div>My Points: {myPoints.points} </div>
+      )}
       <Grid
         classes={gridStyles}
         container
         margin={100}
         spacing={4}
-        wrap={"nowrap"}
+        // wrap={"nowrap"}
       >
         <Grid item onClick={handleOpen}>
           {user.isAdmin && (

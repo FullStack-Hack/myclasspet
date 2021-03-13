@@ -91,7 +91,8 @@ router.put("/:studentId", async (req, res, next) => {
     const student = await Student.findByPk(req.params.studentId);
     student.points += req.body.points;
     await student.save();
-    res.json(student);
+    const updatedStudent = await Student.findByPk(req.params.studentId)
+    res.json(updatedStudent);
   } catch (error) {
     next(error);
   }

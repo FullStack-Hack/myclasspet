@@ -5,14 +5,22 @@ import axios from "axios";
 
 //action type
 const GET_USER = "GET_USER";
+const UPDATE_USER = "UPDATE_USER";
 const REMOVE_USER = "REMOVE_USER";
 
 //action creator
 const gotMe = (user) => ({
   type: GET_USER,
-  user,
+  user
 });
 const removeUser = () => ({ type: REMOVE_USER });
+
+
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  user
+});
+
 
 //thunk
 export const login = (formData) => {
@@ -48,14 +56,14 @@ export const logout = () => {
   };
 };
 
-export const updatePoints = (activityId, studentId, points) => {
+export const updatePoints = (studentId, points) => {
   return async (dispatch) => {
     try {
       //update points in activity, student
-      await axios.put(`/api/activities/${activityId}`);
-      await axios.put(`/api/students/${studentId}`, { points });
-
-      dispatch(gotMe(points));
+      // await axios.put(`/api/activities/${activityId}`);
+      const { data } = await axios.put(`/api/students/${studentId}`, {points: points})
+      console.log("USIDTHUNK:", data)
+      dispatch(gotMe(data));
     } catch (error) {
       console.error(error);
     }
@@ -73,6 +81,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, ...action.user },
       };
+    case UPDATE_USER:
+      return { user: action.user }
     case REMOVE_USER:
       return initialState;
 
