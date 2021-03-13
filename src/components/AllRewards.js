@@ -19,7 +19,8 @@ import axios from "axios";
 import { updatePoints } from "./store";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import GradeIcon from '@material-ui/icons/Grade';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -90,6 +91,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2%",
     backgroundColor: "#B8C1EC",
   },
+  points: {
+    marginTop: "2%",
+    backgroundColor: "#B8C1EC",
+    color: "#FFFFFF"
+  },
   delete: {
     // marginTop: "1%",
     // marginRight: "0",
@@ -97,32 +103,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     // zIndex: "100",
     float: "right"
+  },
+  icons: {
+    display: "flex",
   }
 }));
-
-// const CustomCard = ({ classes, image, title, subtitle, cost }) => {
-//   const mediaStyles = useFourThreeCardMediaStyles();
-//   return (
-//     <CardActionArea className={classes.actionArea}>
-//       <Card className={classes.card}>
-//         <CardMedia classes={mediaStyles} image={image}>
-//           <IconButton aria-label="delete" calsses={classes.delete}>
-//             <DeleteIcon />
-//           </IconButton>
-//         </CardMedia>
-//         <CardContent className={classes.content}>
-//           <Typography className={classes.title} variant={"h3"}>
-//             {title}
-//           </Typography>
-//           <Typography className={classes.subtitle} variant={"h3"}>
-//             ( {cost} Points )
-//           </Typography>
-//           <Typography className={classes.subtitle}>{subtitle}</Typography>
-//         </CardContent>
-//       </Card>
-//     </CardActionArea>
-//   );
-// };
 
 export const AllRewards = React.memo(function RewardCard() {
 
@@ -175,15 +160,17 @@ export const AllRewards = React.memo(function RewardCard() {
     }
   };
 
-  const handleClaim = async (rewardId, points, studentId) => {
+  const handleClaim = async (rewardId, points, studentId, isAdmin) => {
     try {
-      if (points > user.points) {
-        alert("You don't have enough points yet. Keep going! <3");
-      } else {
-        await axios.put("/api/rewards", { rewardId, studentId });
-        points *= -1
-        setMyPoints({ points: user.points + points});
-        dispatch(updatePoints(studentId, points));
+      if (!isAdmin) {
+        if (points > user.points) {
+          alert("You don't have enough points yet. Keep going! <3");
+        } else {
+          await axios.put("/api/rewards", { rewardId, studentId });
+          points *= -1
+          setMyPoints({ points: user.points + points});
+          dispatch(updatePoints(studentId, points));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -211,7 +198,9 @@ export const AllRewards = React.memo(function RewardCard() {
   return (
     <section>
       {!user.isAdmin && (
-        <div>My Points: {myPoints.points} </div>
+        <Button className={classes.points} startIcon={<GradeIcon style={{ color: "#FFD500" }}></GradeIcon>}>
+          My Points: {myPoints.points}
+        </Button>
       )}
       <Grid
         classes={gridStyles}
@@ -239,34 +228,31 @@ export const AllRewards = React.memo(function RewardCard() {
           rewards.map((reward) => {
             return (
               <Grid item key={reward.id}>
-                {/* <CustomCard
-                  classes={styles2}
-                  title={reward.name}
-                  subtitle={reward.description}
-                  cost={reward.cost}
-                  image={reward.imageUrl}
-                  onClick={handleOpen}
-                /> */}
-              <CardActionArea className={styles2.actionArea}>
-                  <Card className={styles2.card} onClick={() => handleClaim(reward.id, reward.cost, user.id)}>
-                    <CardMedia classes={mediaStyles} image={reward.imageUrl}>
-                      {user.isAdmin && (
-                        <IconButton aria-label="delete" calsses={styles2.delete}>
-                          <DeleteIcon />
-                        </IconButton>
-                      )}
-                    </CardMedia>
-                    <CardContent className={styles2.content}>
-                      <Typography className={styles2.title} variant={"h3"}>
-                        {reward.name}
-                      </Typography>
-                      <Typography className={styles2.subtitle} variant={"h3"}>
-                        ( {reward.cost} Points )
-                      </Typography>
-                      <Typography className={styles2.subtitle}>{reward.description}</Typography>
-                    </CardContent>
-                  </Card>
-                </CardActionArea>
+                <CardActionArea className={styles2.actionArea}>
+                    <Card className={styles2.card} onClick={() => handleClaim(reward.id, reward.cost, user.id, user.isAdmin)}>
+                      <CardMedia classes={mediaStyles} image={reward.imageUrl}>
+                        {user.isAdmin && (
+                          <div classes={styles2.icons}>
+                            <IconButton aria-label="delete" classes={styles2.delete} onClick={() => handleDelete(reward.id)}>
+                              <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="delete" classes={styles2.delete} >
+                            <EditIcon />
+                            </IconButton>
+                          </div>
+                        )}
+                      </CardMedia>
+                      <CardContent className={styles2.content}>
+                        <Typography className={styles2.title} variant={"h3"}>
+                          {reward.name}
+                        </Typography>
+                        <Typography className={styles2.subtitle} variant={"h3"}>
+                          ( {reward.cost} Points )
+                        </Typography>
+                        <Typography className={styles2.subtitle}>{reward.description}</Typography>
+                      </CardContent>
+                    </Card>
+                  </CardActionArea>
               </Grid>
             );
           })}
