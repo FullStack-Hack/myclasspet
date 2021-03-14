@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import loggerMiddleware from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import axios from "axios";
+import history from '../history'
 
 //action type
 const GET_USER = "GET_USER";
@@ -14,13 +15,6 @@ const gotMe = (user) => ({
   user
 });
 const removeUser = () => ({ type: REMOVE_USER });
-
-
-const updateUser = (user) => ({
-  type: UPDATE_USER,
-  user
-});
-
 
 //thunk
 export const login = (formData) => {
@@ -50,20 +44,23 @@ export const logout = () => {
     try {
       await axios.delete("/auth/logout");
       dispatch(removeUser());
+      history.push('/login');
     } catch (error) {
       console.error(error);
     }
   };
 };
 
-export const updatePoints = (studentId, points) => {
+export const updatePoints = (studentId, points, isAdmin, activityId) => {
   return async (dispatch) => {
     try {
-      //update points in activity, student
-      // await axios.put(`/api/activities/${activityId}`);
+      if(typeof activityId !== "undefined"){
+        await axios.put(`/api/activities/${activityId}`);
+      }
       const { data } = await axios.put(`/api/students/${studentId}`, {points: points})
-      console.log("USIDTHUNK:", data)
-      dispatch(gotMe(data));
+      if(!isAdmin){
+        dispatch(gotMe(data));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +68,7 @@ export const updatePoints = (studentId, points) => {
 };
 
 const initialState = {
-  user: {},
+  user: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,7 +82,6 @@ const reducer = (state = initialState, action) => {
       return { user: action.user }
     case REMOVE_USER:
       return initialState;
-
     default:
       return state;
   }

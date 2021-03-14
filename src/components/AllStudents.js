@@ -3,6 +3,8 @@ import axios from "axios";
 import { Table, Button } from "semantic-ui-react";
 import AddStudent from "./AddStudent";
 import { Link } from "react-router-dom";
+import Chip from '@material-ui/core/Chip';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 class AllStudents extends Component {
   constructor() {
@@ -39,6 +41,10 @@ class AllStudents extends Component {
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleDelete(event) {
+    console.log("DELTE HERE")
   }
 
   async handleSubmit(event) {
@@ -115,7 +121,7 @@ class AllStudents extends Component {
                   <Table.Cell>{student.id}</Table.Cell>
 
                   <Table.Cell>
-                    <Link to={`/students/${student.id}/activities`}>
+                    <Link to={{ pathname: `/students/${student.id}/activities`, student: student}}>
                       {student.firstName}
                     </Link>
                   </Table.Cell>
@@ -123,18 +129,17 @@ class AllStudents extends Component {
                   <Table.Cell>{student.lastName}</Table.Cell>
                   <Table.Cell>{student.email}</Table.Cell>
                   <Table.Cell>
-                    {rewards.map((reward, idx) => {
+                    {student.rewards.map((reward) => {
                       return (
-                        <Button
-                          key={idx}
-                          studentid={student.id}
-                          rewardid={reward.id}
-                          onClick={this.redeemReward}
-                        >
-                          {reward.name}
-                        </Button>
-                      );
-                    }) || ""}
+                      <Chip
+                        icon={<EmojiEventsIcon />}
+                        label={reward.name}
+                        // onClick={handleClick}
+                        onDelete={this.handleDelete}
+                      />)
+                    //   reward.name + " || ";
+                    // }) || ""}
+                      })}
                   </Table.Cell>
 
                   <Table.Cell>

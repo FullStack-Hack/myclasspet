@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updatePoints } from "./store";
+import { makeStyles } from "@material-ui/core/styles";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import axios from "axios";
 import ActivityForm from "./ActivityForm";
+import GradeIcon from '@material-ui/icons/Grade';
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+  points: {
+    marginTop: "2%",
+    backgroundColor: "#B8C1EC",
+    color: "#FFFFFF"
+  }
+}));
 
 const SingleStudent = ({ match }) => {
+
+  const classes = useStyles();
+
   const [activities, setActivities] = useState([]);
 
   const { user } = useSelector((state) => state);
@@ -54,8 +68,10 @@ const SingleStudent = ({ match }) => {
 
         dispatch(
           updatePoints(
-            user.id,
-            clickInfo.event.extendedProps.points
+            match.params.studentId,
+            clickInfo.event.extendedProps.points,
+            user.isAdmin,
+            activity.id
           )
         );
         clickInfo.event.setExtendedProp("points", 0);
@@ -66,25 +82,31 @@ const SingleStudent = ({ match }) => {
   };
 
   return (
-    <div className="single_student">
-      <div className="calendar">
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin]}
-          initialView="timeGridDay"
-          events={activities}
-          eventContent={renderEventContent}
-          eventClick={handleEventClick}
-        />
-      </div>
-      <div class="form_points">
-        {user.isAdmin && (
-          <ActivityForm
-            studentId={match.params.studentId}
-            activities={activities}
-            setActivities={setActivities}
+    <div>
+      {!user.isAdmin && (
+        <Button className={classes.points} startIcon={<GradeIcon style={{ color: "#FFD500" }}></GradeIcon>}>
+          My Points: {user.points}
+        </Button>
+      )}
+      <div className="single_student">
+        <div class="form_points">
+          {user.isAdmin && (
+            <ActivityForm
+              studentId={match.params.studentId}
+              activities={activities}
+              setActivities={setActivities}
+            />
+          )}
+        </div>
+        <div className="calendar">
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin]}
+            initialView="timeGridDay"
+            events={activities}
+            eventContent={renderEventContent}
+            eventClick={handleEventClick}
           />
-        )}
-        <div class="points">POINTS: {points}</div>
+        </div>
       </div>
     </div>
   );

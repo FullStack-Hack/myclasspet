@@ -8,7 +8,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardActions from "@material-ui/core/CardActions";
 import { useFourThreeCardMediaStyles } from "@mui-treasury/styles/cardMedia/fourThree";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
@@ -17,7 +16,10 @@ import Fade from "@material-ui/core/Fade";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { updatePoints } from "./store";
-
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import GradeIcon from '@material-ui/icons/Grade';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -61,16 +63,14 @@ const useStyles = makeStyles((theme) => ({
     };
   },
   title: {
-    fontFamily: "Keania One",
     fontSize: "1rem",
     color: "#FFFFFF",
     textTransform: "uppercase",
   },
   subtitle: {
-    fontFamily: "Montserrat",
     color: "#FFFFFF",
     opacity: 0.87,
-    marginTop: "2rem",
+    marginTop: ".5rem",
     fontWeight: 500,
     fontSize: 14,
   },
@@ -84,50 +84,28 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   submit: {
     marginTop: "2%",
     backgroundColor: "#B8C1EC",
   },
+  points: {
+    marginTop: "2%",
+    backgroundColor: "#B8C1EC",
+    color: "#FFFFFF"
+  },
+  delete: {
+    position: "relative",
+    float: "right"
+  },
+  icons: {
+    display: "flex",
+  },
+  callout: {
+    marginTop: "2%"
+  }
 }));
-
-const AddCard = ({ classes, image, title, subtitle, modalFunction }) => {
-  const mediaStyles = useFourThreeCardMediaStyles();
-  return (
-    <CardActionArea className={classes.actionArea} onClick={modalFunction}>
-      <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image} />
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={"h3"}>
-            {title}
-          </Typography>
-          <Typography className={classes.subtitle}>{subtitle}</Typography>
-        </CardContent>
-      </Card>
-    </CardActionArea>
-  );
-};
-
-const CustomCard = ({ classes, image, title, subtitle, cost }) => {
-  const mediaStyles = useFourThreeCardMediaStyles();
-  return (
-    <CardActionArea className={classes.actionArea}>
-      <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={image} />
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={"h3"}>
-            {title}
-          </Typography>
-          <Typography className={classes.subtitle}>{subtitle}</Typography>
-          <CardActions display="flex">
-            <Typography>{cost} Points</Typography>
-          </CardActions>
-        </CardContent>
-      </Card>
-    </CardActionArea>
-  );
-};
 
 export const AllRewards = React.memo(function RewardCard() {
 
@@ -140,6 +118,7 @@ export const AllRewards = React.memo(function RewardCard() {
 
   const styles = useStyles({ color: "#808080" });
   const styles2 = useStyles({ color: "#B8C1EC" });
+  const mediaStyles = useFourThreeCardMediaStyles();
 
   const [rewards, setRewards] = useState(null);
   const [open, setOpen] = useState(false);
@@ -179,15 +158,17 @@ export const AllRewards = React.memo(function RewardCard() {
     }
   };
 
-  const handleClaim = async (rewardId, points, studentId) => {
+  const handleClaim = async (rewardId, points, studentId, isAdmin) => {
     try {
-      if (points > user.points) {
-        alert("You don't have enough points yet. Keep going! <3");
-      } else {
-        await axios.put("/api/rewards", { rewardId, studentId });
-        points *= -1
-        setMyPoints({ points: user.points + points});
-        dispatch(updatePoints(studentId, points));
+      if (!isAdmin) {
+        if (points > user.points) {
+          alert("You don't have enough points yet to claim this reward. Keep going! <3");
+        } else {
+          await axios.put("/api/rewards", { rewardId, studentId });
+          points *= -1
+          setMyPoints({ points: user.points + points});
+          dispatch(updatePoints(studentId, points, isAdmin));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -215,55 +196,69 @@ export const AllRewards = React.memo(function RewardCard() {
   return (
     <section>
       {!user.isAdmin && (
-        <div>My Points: {myPoints.points} </div>
+        <div>
+          <Button className={classes.points} startIcon={<GradeIcon style={{ color: "#FFD500" }}></GradeIcon>}>
+            My Points: {myPoints.points}
+          </Button>
+          <div className={styles.callout}>
+            <Typography variant={"h6"}>Select a reward below by clicking on it.</Typography>
+          </div>
+        </div>
       )}
       <Grid
         classes={gridStyles}
         container
         margin={100}
         spacing={4}
-        // wrap={"nowrap"}
       >
-        <Grid item onClick={handleOpen}>
+        <Grid item>
           {user.isAdmin && (
-            <AddCard
-              classes={styles}
-              title={"Add a Reward"}
-              subtitle={"Click to add a new reward."}
-              image={
-                "https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"
-              }
-            />
+            <CardActionArea className={styles.actionArea} onClick={handleOpen}>
+              <Card className={styles.card}>
+                <CardMedia classes={mediaStyles} image="https://www.jampedals.com/wp-content/uploads/2017/05/plus-sign.jpg"></CardMedia>
+                <CardContent classes={styles} className={styles.content}>
+                  <Typography className={styles.title} variant={"h3"}>
+                    Add a Reward
+                  </Typography>
+                  <Typography className={styles.subtitle}>Click to add a new reward</Typography>
+                </CardContent>
+              </Card>
+            </CardActionArea>
           )}
         </Grid>
         {rewards &&
           rewards.map((reward) => {
             return (
               <Grid item key={reward.id}>
-                <CustomCard
-                  classes={styles2}
-                  title={reward.name}
-                  subtitle={reward.description}
-                  cost={reward.cost}
-                  image={reward.imageUrl}
-                  onClick={handleOpen}
-                />
-                {user.isAdmin && (
-                  <Button type="button" onClick={() => handleDelete(reward.id)}>
-                    Delete This Reward
-                  </Button>
-                )}
-                {!user.isAdmin && (
-                  <Button
-                    type="button"
-                    onClick={() => handleClaim(reward.id, reward.cost, user.id)}
-                  >
-                    Claim This Reward
-                  </Button>
-                )}
+                <CardActionArea className={styles2.actionArea}>
+                    <Card className={styles2.card} onClick={() => handleClaim(reward.id, reward.cost, user.id, user.isAdmin)}>
+                      <CardMedia classes={mediaStyles} image={reward.imageUrl}>
+                        {user.isAdmin && (
+                          <div classes={styles2.icons}>
+                            <IconButton aria-label="delete" onClick={() => handleDelete(reward.id)}>
+                              <DeleteIcon />
+                            </IconButton>
+                            <IconButton aria-label="delete" >
+                            <EditIcon />
+                            </IconButton>
+                          </div>
+                        )}
+                      </CardMedia>
+                      <CardContent className={styles2.content}>
+                        <Typography className={styles2.title} variant={"h3"}>
+                          {reward.name}
+                        </Typography>
+                        <Typography className={styles2.subtitle} variant={"h3"}>
+                          ( {reward.cost} Points )
+                        </Typography>
+                        <Typography className={styles2.subtitle}>{reward.description}</Typography>
+                      </CardContent>
+                    </Card>
+                  </CardActionArea>
               </Grid>
             );
           })}
+
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"

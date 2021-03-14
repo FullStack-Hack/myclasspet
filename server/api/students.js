@@ -92,6 +92,7 @@ router.put("/:studentId", async (req, res, next) => {
     student.points += req.body.points;
     await student.save();
     const updatedStudent = await Student.findByPk(req.params.studentId)
+    console.log("WE# IN THE THUNK:", updatedStudent.data)
     res.json(updatedStudent);
   } catch (error) {
     next(error);
