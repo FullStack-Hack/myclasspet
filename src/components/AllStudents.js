@@ -43,10 +43,6 @@ class AllStudents extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleDelete(event) {
-    console.log("DELTE HERE")
-  }
-
   async handleSubmit(event) {
     event.preventDefault();
     try {
@@ -60,19 +56,16 @@ class AllStudents extends Component {
       console.log(error);
     }
   }
-  async redeemReward(event) {
-    event.preventDefault();
-    let payload = {
-      studentId: event.target.attributes.studentid.value,
-      rewardId: event.target.attributes.rewardid.value,
-    };
+
+  async redeemReward(studentId, rewardId) {
     try {
-      await axios.put("api/students/reward", payload);
+      await axios.put(`/api/students/${studentId}/rewards/${rewardId}`)
     } catch (error) {
       console.log(error);
     }
     this.getStudents();
   }
+
   async deleteStudent(event) {
     try {
       await axios.delete(`api/students/${event.target.id}`);
@@ -134,11 +127,9 @@ class AllStudents extends Component {
                       <Chip
                         icon={<EmojiEventsIcon />}
                         label={reward.name}
-                        // onClick={handleClick}
-                        onDelete={this.handleDelete}
+                        key={reward.id}
+                        onDelete={() => this.redeemReward(student.id, reward.id)}
                       />)
-                    //   reward.name + " || ";
-                    // }) || ""}
                       })}
                   </Table.Cell>
 
