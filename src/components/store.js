@@ -7,7 +7,6 @@ import axios from "axios";
 const GET_USER = "GET_USER";
 const UPDATE_USER = "UPDATE_USER";
 const REMOVE_USER = "REMOVE_USER";
-// const SET_FETCHING_STATUS = "SET_FETCHING_STATUS";
 
 //action creator
 const gotMe = (user) => ({
@@ -16,17 +15,11 @@ const gotMe = (user) => ({
 });
 const removeUser = () => ({ type: REMOVE_USER });
 
-// const setFetchingStatus = (isFetching) => ({
-//   type: SET_FETCHING_STATUS,
-//   isFetching,
-// });
-
 //thunk
 export const login = (formData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put("/api/auth/login", formData);
-      console.log("DATAAAAA:", data);
       dispatch(gotMe(data));
     } catch (error) {
       console.error(error);
@@ -38,7 +31,6 @@ export const signUp = (userBody) => {
   return async (dispatch) => {
     try {
       const {data} = await axios.post('/api/students/add', userBody)
-      console.log('!!!!!!!!!!store.js',data)
       dispatch(gotMe(data))
     } catch (error) {
       console.error(error)
@@ -46,19 +38,6 @@ export const signUp = (userBody) => {
   }
 }
 
-// export const fetchMe = () => {
-//   return async (dispatch) => {
-//     dispatch(setFetchingStatus(true));
-//     try {
-//       const { data } = await axios.get("/auth/me");
-//       dispatch(gotMe(data));
-//     } catch (error) {
-//       console.error(error);
-//     } finally {
-//       dispatch(setFetchingStatus(false));
-//     }
-//   };
-// };
 export const logout = () => {
   return async (dispatch) => {
     try {
@@ -70,14 +49,14 @@ export const logout = () => {
   };
 };
 
-export const updatePoints = (studentId, points, activityId, isAdmin) => {
+export const updatePoints = (studentId, points, isAdmin, activityId) => {
   return async (dispatch) => {
     console.log("inside store, updatepoints", studentId, points);
     try {
-      //update points in activity, student
-      await axios.put(`/api/activities/${activityId}`);
+      if(typeof activityId !== "undefined"){
+        await axios.put(`/api/activities/${activityId}`);
+      }
       const { data } = await axios.put(`/api/students/${studentId}`, {points: points})
-      console.log("USIDTHUNK:", data, "IS ADMIN?????:", data.isAdmin)
       if(!isAdmin){
         dispatch(gotMe(data));
       }
@@ -88,9 +67,7 @@ export const updatePoints = (studentId, points, activityId, isAdmin) => {
 };
 
 const initialState = {
-  user: {
-    // isFetching: true,
-  },
+  user: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -104,13 +81,6 @@ const reducer = (state = initialState, action) => {
       return { user: action.user }
     case REMOVE_USER:
       return initialState;
-    // case SET_FETCHING_STATUS:
-    //   return {
-    //     ...state, user: {
-    //       ...state.user,
-    //       isFetching: action.isFetching
-    //     }
-    //   }
     default:
       return state;
   }

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const { handleSubmit } = props;
+
   const classes = useStyles();
 
   return (
@@ -97,6 +98,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   // Hey, check it out! Because we pass the connected Login to a Route
   // (we do this in client/index.js), it receives the "route props"
   // (match, location, and history) as its "own props".
+
   return {
     async handleSubmit(evt) {
       try {
@@ -104,9 +106,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         const email = evt.target.email.value;
         const password = evt.target.password.value;
         console.log("in login.js", email, password);
-        const user = await dispatch(login({ email, password }));
+        const dispatchData = await dispatch(login({ email, password }));
         //if check if user is an admin/teacher?, if not, push to their student id
-
+        
         ownProps.history.push("/rewards");
       } catch (error) {
         console.error(error);

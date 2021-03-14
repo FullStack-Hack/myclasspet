@@ -202,7 +202,6 @@ export const AllRewards = React.memo(function RewardCard() {
         container
         margin={100}
         spacing={4}
-        // wrap={"nowrap"}
       >
         <Grid item>
           {user.isAdmin && (

@@ -70,8 +70,8 @@ const SingleStudent = ({ match }) => {
           updatePoints(
             match.params.studentId,
             clickInfo.event.extendedProps.points,
-            activity.id,
-            user.isAdmin
+            user.isAdmin,
+            activity.id
           )
         );
         clickInfo.event.setExtendedProp("points", 0);
