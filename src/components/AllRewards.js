@@ -20,6 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GradeIcon from '@material-ui/icons/Grade';
 import EditIcon from '@material-ui/icons/Edit';
+import MouseIcon from '@material-ui/icons/Mouse';
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -101,6 +102,9 @@ const useStyles = makeStyles((theme) => ({
   },
   icons: {
     display: "flex",
+  },
+  callout: {
+    marginTop: "2%"
   }
 }));
 
@@ -159,7 +163,7 @@ export const AllRewards = React.memo(function RewardCard() {
     try {
       if (!isAdmin) {
         if (points > user.points) {
-          alert("You don't have enough points yet. Keep going! <3");
+          alert("You don't have enough points yet to claim this reward. Keep going! <3");
         } else {
           await axios.put("/api/rewards", { rewardId, studentId });
           points *= -1
@@ -193,9 +197,14 @@ export const AllRewards = React.memo(function RewardCard() {
   return (
     <section>
       {!user.isAdmin && (
-        <Button className={classes.points} startIcon={<GradeIcon style={{ color: "#FFD500" }}></GradeIcon>}>
-          My Points: {myPoints.points}
-        </Button>
+        <div>
+          <Button className={classes.points} startIcon={<GradeIcon style={{ color: "#FFD500" }}></GradeIcon>}>
+            My Points: {myPoints.points}
+          </Button>
+          <div className={styles.callout}>
+            <Typography variant={"h6"}>Select a reward below by clicking on it.</Typography>
+          </div>
+        </div>
       )}
       <Grid
         classes={gridStyles}
