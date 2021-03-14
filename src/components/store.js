@@ -16,11 +16,6 @@ const gotMe = (user) => ({
 });
 const removeUser = () => ({ type: REMOVE_USER });
 
-const updateUser = (user) => ({
-  type: UPDATE_USER,
-  user
-});
-
 // const setFetchingStatus = (isFetching) => ({
 //   type: SET_FETCHING_STATUS,
 //   isFetching,
@@ -75,15 +70,17 @@ export const logout = () => {
   };
 };
 
-export const updatePoints = (studentId, points) => {
+export const updatePoints = (studentId, points, activityId, isAdmin) => {
   return async (dispatch) => {
     console.log("inside store, updatepoints", studentId, points);
     try {
       //update points in activity, student
-      // await axios.put(`/api/activities/${activityId}`);
+      await axios.put(`/api/activities/${activityId}`);
       const { data } = await axios.put(`/api/students/${studentId}`, {points: points})
-      console.log("USIDTHUNK:", data)
-      dispatch(gotMe(data));
+      console.log("USIDTHUNK:", data, "IS ADMIN?????:", data.isAdmin)
+      if(!isAdmin){
+        dispatch(gotMe(data));
+      }
     } catch (error) {
       console.error(error);
     }

@@ -8,7 +8,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardActions from "@material-ui/core/CardActions";
 import { useFourThreeCardMediaStyles } from "@mui-treasury/styles/cardMedia/fourThree";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
@@ -97,11 +96,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFFFFF"
   },
   delete: {
-    // marginTop: "1%",
-    // marginRight: "0",
-    // width: "100px",
     position: "relative",
-    // zIndex: "100",
     float: "right"
   },
   icons: {
@@ -169,7 +164,7 @@ export const AllRewards = React.memo(function RewardCard() {
           await axios.put("/api/rewards", { rewardId, studentId });
           points *= -1
           setMyPoints({ points: user.points + points});
-          dispatch(updatePoints(studentId, points));
+          dispatch(updatePoints(studentId, points, isAdmin));
         }
       }
     } catch (error) {
@@ -233,10 +228,10 @@ export const AllRewards = React.memo(function RewardCard() {
                       <CardMedia classes={mediaStyles} image={reward.imageUrl}>
                         {user.isAdmin && (
                           <div classes={styles2.icons}>
-                            <IconButton aria-label="delete" classes={styles2.delete} onClick={() => handleDelete(reward.id)}>
+                            <IconButton aria-label="delete" onClick={() => handleDelete(reward.id)}>
                               <DeleteIcon />
                             </IconButton>
-                            <IconButton aria-label="delete" classes={styles2.delete} >
+                            <IconButton aria-label="delete" >
                             <EditIcon />
                             </IconButton>
                           </div>

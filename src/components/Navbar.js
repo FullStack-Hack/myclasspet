@@ -9,10 +9,9 @@ import { logout } from "./store";
 import TodayIcon from '@material-ui/icons/Today';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
-import GradeIcon from '@material-ui/icons/Grade';
 import GroupIcon from '@material-ui/icons/Group';
 import RedeemIcon from '@material-ui/icons/Redeem';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -73,7 +72,7 @@ const Navbar = ({ history }) => {
             centered
           >
             <Tab label="Login" icon={<HomeIcon />} component={Link} to="/login" />
-            <Tab label="Signup" icon={<HomeIcon />} component={Link} to="/signup" />
+            <Tab label="Signup" icon={<ContactMailIcon />} component={Link} to="/signup" />
           </Tabs>
         )}
     </Paper>

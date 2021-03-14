@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import HomeIcon from '@material-ui/icons/Home';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +54,7 @@ const Signup = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <HomeIcon />
+          <ContactMailIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign Up

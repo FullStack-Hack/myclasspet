@@ -75,9 +75,12 @@ header nav {
 
 .single_student {
   display: flex;
-  justify-content: space-between;
-  height: 100vh;
+  /* justify-content: space-between; */
+  height: 60%;
+  flex-direction: column;
+  /* position:fixed; */
 }
+
 .calendar {
   display: flex;
   flex: 1;
@@ -86,8 +89,9 @@ header nav {
   width: 100%;
   flex: 1;
 }
+
 .form_points {
-  flex: 1;
+  margin: 1%;
 }
 
 .points {

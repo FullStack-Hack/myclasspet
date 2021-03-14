@@ -97,7 +97,7 @@ class AllStudents extends Component {
                   <Table.Cell>{student.id}</Table.Cell>
 
                   <Table.Cell>
-                    <Link to={`/students/${student.id}/activities`}>
+                    <Link to={{ pathname: `/students/${student.id}/activities`, student: student}}>
                       {student.firstName}
                     </Link>
                   </Table.Cell>
