@@ -23,6 +23,7 @@ router.get("/:studentId", async (req, res, next) => {
   }
 });
 
+
 router.get("/:studentId/activities", async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.studentId, {
@@ -75,16 +76,6 @@ router.delete("/:studentid", async (req, res, next) => {
     next(error);
   }
 });
-router.put("/reward", async (req, res, next) => {
-  try {
-    const currentstudent = await Student.findByPk(req.body.studentId);
-    const currentreward = await Reward.findByPk(req.body.rewardId);
-    await currentstudent.removeReward(currentreward);
-    res.status(201).json(currentreward).end();
-  } catch (error) {
-    next(error);
-  }
-});
 
 router.put("/:studentId", async (req, res, next) => {
   try {
@@ -92,9 +83,22 @@ router.put("/:studentId", async (req, res, next) => {
     student.points += req.body.points;
     await student.save();
     const updatedStudent = await Student.findByPk(req.params.studentId)
-    console.log("WE# IN THE THUNK:", updatedStudent.data)
     res.json(updatedStudent);
   } catch (error) {
     next(error);
   }
 });
+
+router.put("/:studentId/rewards/:rewardId", async (req, res, next) => {
+  try {
+    const {studentId, rewardId} = req.params
+    const student = await Student.findByPk(studentId)
+    const reward = await Reward.findByPk(rewardId)
+    await student.removeReward(reward)
+    res.send(student)
+  } catch (error) {
+    next(error);
+  }
+});
+
+
