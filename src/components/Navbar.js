@@ -10,7 +10,7 @@ import TodayIcon from '@material-ui/icons/Today';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
 import GroupIcon from '@material-ui/icons/Group';
-import RedeemIcon from '@material-ui/icons/Redeem';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const useStyles = makeStyles(() => ({
@@ -54,7 +54,7 @@ const Navbar = ({ history }) => {
                 to={`/students/${user.id}/activities`}
               />
             )}
-            <Tab label="Rewards" icon={<RedeemIcon />} component={Link} to="/rewards" />
+            <Tab label="Rewards" icon={<EmojiEventsIcon />} component={Link} to="/rewards" />
             <Tab
               label="Logout"
               icon={<ExitToAppIcon />}

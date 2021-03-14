@@ -20,7 +20,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GradeIcon from '@material-ui/icons/Grade';
 import EditIcon from '@material-ui/icons/Edit';
-import MouseIcon from '@material-ui/icons/Mouse';
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
   root: {

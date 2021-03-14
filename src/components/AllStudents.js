@@ -3,6 +3,8 @@ import axios from "axios";
 import { Table, Button } from "semantic-ui-react";
 import AddStudent from "./AddStudent";
 import { Link } from "react-router-dom";
+import Chip from '@material-ui/core/Chip';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 class AllStudents extends Component {
   constructor() {
@@ -38,6 +40,10 @@ class AllStudents extends Component {
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleDelete(event) {
+    console.log("DELTE HERE")
   }
 
   async handleSubmit(event) {
@@ -106,8 +112,16 @@ class AllStudents extends Component {
                   <Table.Cell>{student.email}</Table.Cell>
                   <Table.Cell>
                     {student.rewards.map((reward) => {
-                      return reward.name + " || ";
-                    }) || ""}
+                      return (
+                      <Chip
+                        icon={<EmojiEventsIcon />}
+                        label={reward.name}
+                        // onClick={handleClick}
+                        onDelete={this.handleDelete}
+                      />)
+                    //   reward.name + " || ";
+                    // }) || ""}
+                      })}
                   </Table.Cell>
 
                   <Table.Cell>
