@@ -31,13 +31,13 @@ export const login = (formData) => {
 export const signUp = (userBody) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.post('/api/students/add', userBody)
-      dispatch(gotMe(data))
+      const { data } = await axios.post("/api/students/", userBody);
+      dispatch(gotMe(data));
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-}
+  };
+};
 
 export const logout = () => {
   return async (dispatch) => {
@@ -53,7 +53,6 @@ export const logout = () => {
 
 export const updatePoints = (studentId, points, isAdmin, activityId) => {
   return async (dispatch) => {
-    console.log("inside store, updatepoints", studentId, points);
     try {
       if(typeof activityId !== "undefined"){
         await axios.put(`/api/activities/${activityId}`);

@@ -22,6 +22,7 @@ class AllStudents extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getStudents = this.getStudents.bind(this);
     this.deleteStudent = this.deleteStudent.bind(this);
+    this.redeemReward = this.redeemReward.bind(this);
   }
   toggleAddStudent() {
     this.setState({ addStudentForm: !this.state.addStudentForm });
@@ -49,7 +50,7 @@ class AllStudents extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     try {
-      await axios.post("/api/students/add", {
+      await axios.post("/api/students/", {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
@@ -58,6 +59,19 @@ class AllStudents extends Component {
     } catch (error) {
       console.log(error);
     }
+  }
+  async redeemReward(event) {
+    event.preventDefault();
+    let payload = {
+      studentId: event.target.attributes.studentid.value,
+      rewardId: event.target.attributes.rewardid.value,
+    };
+    try {
+      await axios.put("api/students/reward", payload);
+    } catch (error) {
+      console.log(error);
+    }
+    this.getStudents();
   }
   async deleteStudent(event) {
     try {
@@ -70,7 +84,7 @@ class AllStudents extends Component {
 
   render() {
     let { students } = this.state;
-    console.log(students, "this is students during render");
+
     return (
       <div>
         <div className="add-student-container">
@@ -93,11 +107,15 @@ class AllStudents extends Component {
               <Table.HeaderCell>First Name</Table.HeaderCell>
               <Table.HeaderCell>Last Name</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
-              <Table.HeaderCell>Rewards Available</Table.HeaderCell>
+              <Table.HeaderCell>
+                Rewards Available <br />
+                (click to redeem)
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {students.map((student, idx) => {
+              let { rewards } = student;
               return (
                 <Table.Row key={idx}>
                   <Table.Cell>{student.id}</Table.Cell>
