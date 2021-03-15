@@ -19,6 +19,17 @@ add the following:<br />
 SPEECH_SECRET is from Configure Direct Line<br />
 PET_SPEECH_KEY_SECRET is from the petspeech keys and endpoint<br />
 
+To look at the teacher's view, log in with:
+```
+email: tomnook@mail.com
+password: 1234
+```
+To look at a student's view, log in with:
+```
+email: cody@mail.com
+password: 1234
+```
+
 ---
 
 # Built for Microsoft Azure U.S. Hack for Accessibility
