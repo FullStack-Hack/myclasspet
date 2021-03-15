@@ -8,9 +8,16 @@
 
 ### `npm install`
 
+### create .env file (see below)
+
 ### `npm run start-server`
 
 ### open a new terminal `npm start`
+
+to create your .env file, <br />
+add the following:<br />
+SPEECH_SECRET is from Configure Direct Line<br />
+PET_SPEECH_KEY_SECRET is from the petspeech keys and endpoint<br />
 
 ---
 
