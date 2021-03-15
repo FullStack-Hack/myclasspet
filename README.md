@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Getting Started with Class Pet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Run Locally
 
-## Available Scripts
+### `createdb myclasspet`
 
-In the project directory, you can run:
+### `npm run seed`
 
-### `npm start`
+### `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `npm run start-server`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### open a new terminal `npm start`
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Built for Microsoft Azure U.S. Hack for Accessibility
 
-### `npm run build`
+## By Fullstack Academy Alumni:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+May Hein, Eric Zou, Teofilo Callanaupa, Kaitlin Browne
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## In consultation with:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Brooklyn Autism Center
+brooklynautismcenter.org
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Inspiration
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We have all individually worked with individuals ages 9 to 13 with Autism Spectrum Disorder (ASD) and we wanted to be able to incorporate our skills with the NERD stack and Azure to help in a remote learning environment.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## What it does
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+ClassPet is a task and token management web app designed to assist teachers, caretakers, and students in a remote learning environment. Teachers/caretakers can create schedules and assign token points to tasks. Students are able to see their schedule and earn token points upon task completion. Students can interact with the Azure chat bot to learn more about how to complete their task, and can claim rewards using token points. Teachers are able to see the rewards that a student has claimed and are able to redeem them.
 
-## Learn More
+## How we built it
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We used Node.js, Express.js, PostgreSQL, and Sequelize to create our RESTful API routes. For our front-end, we used React, Redux, Material-UI, and Semantic-UI. FullCalendar was used to create the basis for the calendar component. Azure’s QnAMaker was used for the web chat component.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Challenges we ran into
 
-### Code Splitting
+Learning how to use the Azure bot services and attempting to integrate the bot with our web app was our biggest challenge.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Accomplishments that we're proud of
 
-### Analyzing the Bundle Size
+We are proud that we were able to come so far in creating a tool that the Brooklyn Autism Center could use in a remote environment. We are also proud to complete our first hackathon while working with new technologies in a limited time frame on Zoom.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## What we learned
 
-### Making a Progressive Web App
+We learned how to train machine learning bots and deploy them into our web app. We also learned how to manage the bot services in resource groups and connect speech services to a qna bot. When talking with a representative from the Brooklyn Autism Center, we also learned about the challenges that remote learning has imposed on teachers, caretakers, and students during covid.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## What's next for Class Pet
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Integrating a web chat feature to allow teachers and students to communicate directly on the web app. Also integrate custom commands so that students can navigate the website with the class pet bot.
